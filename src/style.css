@@ -1,0 +1,62 @@
+*body {
+  margin: 0;
+}
+
+.demo-block-1{
+  height: 700px;
+}
+
+#static-map{
+  height: 700px;
+}
+
+#mapid {
+  height: 700px;
+}
+
+.draggable-marker{
+  z-index: 1000;
+  width: 40px;
+  height: 40px;
+}
+
+li{
+  margin-top: 5px;
+  margin-bottom: 5px;
+}
+
+#navbar {
+  background-color: #099;
+  top: 0;
+  width: 100%;
+  padding-top: 3px;
+  padding-bottom: 3px;
+  padding-left: 20px;
+}
+
+.main {
+  height: 500px;
+  overflow: auto;
+  margin-top: 10px;
+  padding: 16px;
+  width: 98%;
+  cursor: grab;
+  cursor: -o-grab;
+  cursor: -moz-grab;
+  cursor: -webkit-grab;
+}
+
+.main img {
+  height: auto;
+  width: 100%;
+}
+
+.zoom-btn{
+  right: 0px;
+  position: fixed;
+}
+
+.draggable {
+  touch-action: none;
+  user-select: none;
+}

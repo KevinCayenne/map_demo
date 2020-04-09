@@ -1,0 +1,59 @@
+<head>
+   <link rel="stylesheet" href="https://unpkg.com/leaflet@1.5.1/dist/leaflet.css"
+   integrity="sha512-xwE/Az9zrjBIphAcBb3F6JVqxf46+CDLwfLMHloNu6KEQCAWi6HcDUbeOfBIptF7tcCzusKFjFw2yuvEpDL9wQ=="
+   crossorigin=""/>
+   <!-- Make sure you put this AFTER Leaflet's CSS -->
+   <script src="https://unpkg.com/leaflet@1.5.1/dist/leaflet.js"
+     integrity="sha512-GffPMF3RvMeYyc1LWMHtK8EbPv0iNZ8/oTtHPx9/cc2ILxQ+u905qIwdpULaqDkyBKgOaB57QTMg7ztg8Jm2Og=="
+     crossorigin=""></script>
+    <script src="https://unpkg.com/interactjs/dist/interact.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/interactjs/dist/interact.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+    <script type="text/javascript" src="https://cdn.rawgit.com/asvd/dragscroll/master/dragscroll.js"></script>
+    <script type="text/javascript" src="./src/script.js"></script>
+    <link rel="stylesheet" href="./src/style.css"/>
+</head>
+
+<body>
+  <h3 class="text-center">Demo</h3>
+  <div class="row demo-block-1 mb-3">
+    <div class="side-menu col-sm-2 border rounded px-2 py-2 mb-3">
+      <ul>
+        <li>
+          <img class="draggable-marker" src="img/map_marker.png" alt="marker" name="門"/>
+          <span>門</span>
+        </li>
+        <li>
+          <img class="draggable-marker" src="img/map_marker_blue.png" alt="marker" name="桌子"/>
+          <span>桌子</span>
+        </li>
+      </ul>
+    </div>
+    <div class="col-sm-10">
+      <div id="static-map" class="bg-light border rounded mb-3 px-2 py-2">
+      </div>
+    </div>
+  </div>
+
+  <!-- <hr>
+
+  <form class="mb-0">
+    <div class="px-3 py-2 bg-info">
+      <div class="form-group mb-0">
+        <label for="inputImg" class="pr-2 text-white">上傳圖片</label>
+        <input class="align-middle btn btn-light" id="inputImg" type='file' accept="image/gif, image/jpeg, image/png"/>
+      </div>
+    </div>
+  </form>
+  <div id="mapid" class="bg-light border">
+
+  </div> -->
+
+  <script src="https://unpkg.com/interactjs@latest/dist/interact.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.js"></script>
+</body>
