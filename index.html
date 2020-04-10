@@ -22,26 +22,28 @@
 </head>
 
 <body>
-  <div class="title my-2">
-    <h3 class="text-center">Demo</h3>
-    <small class="px-3 text-right">說明: 按住左側欄位之圖釘圖案，並拖曳到圖片上想放置的位置放下即可完成打點。點選圖釘可以編輯內容說明。</small>
+  <div class="title py-2 bg-dark row">
+    <h3 class="text-center text-white col-sm-12">晉基建設 設備標註系統</h3>
+    <div class="px-3 text-right text-white col-sm-12">
+      <small>說明: 按住右側欄位之圖釘圖案，並拖曳到圖片上想放置的位置放下即可完成打點。點選圖釘可以編輯內容說明。</small>
+    </div>
   </div>
   <div class="row demo-block-1 mb-3">
+    <div class="col-sm-10 border mb-3 pl-2 pr-0">
+      <div id="static-map" class="bg-light">
+      </div>
+    </div>
     <div class="side-menu col-sm-2 border px-0 py-0 mb-3">
       <ul>
         <li>
-          <img class="draggable-marker" src="img/map_marker.png" alt="marker" name="門"/>
-          <span>門</span>
+          <img class="draggable-marker" src="img/map_marker.png" alt="marker" name="柱子"/>
+          <div class="marker-name">柱子</div>
         </li>
         <li>
-          <img class="draggable-marker" src="img/map_marker_blue.png" alt="marker" name="桌子"/>
-          <span>桌子</span>
+          <img class="draggable-marker" src="img/map_marker_blue.png" alt="marker" name="電源"/>
+          <div class="marker-name">電源</div>
         </li>
       </ul>
-    </div>
-    <div class="col-sm-10 border mb-3 px-2">
-      <div id="static-map" class="bg-light">
-      </div>
     </div>
   </div>
 

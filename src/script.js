@@ -104,14 +104,14 @@ function removeElementsByClass(className){
 // Dragging and dropping the markers to the map
 var addMarkers = function(map, markers, markersCount, markersCluster){
   // The position of the marker icon
-  var posTop = $( '.draggable-marker' ).css( 'top' ),
-      posLeft = $( '.draggable-marker' ).css( 'left' );
+  var posTop = $('.draggable-marker').css('top'),
+      posLeft = $('.draggable-marker').css('left');
 
-  $( '.draggable-marker' ).draggable({
-    stop: function ( e, ui ) {
+  $('.draggable-marker').draggable({
+    stop: function(e, ui){
       // returning the icon to the menu
-      $( '.draggable-marker' ).css( 'top', posTop );
-      $( '.draggable-marker' ).css( 'left', posLeft );
+      $('.draggable-marker').css('top', posTop);
+      $('.draggable-marker').css('left', posLeft);
 
       var markerName = $(this).attr('name');
       var markerIcon = $(this).attr('src');
@@ -119,10 +119,10 @@ var addMarkers = function(map, markers, markersCount, markersCluster){
       var sideMenuWidth = $('.side-menu').width();
       console.log(sideMenuWidth);
 
-      var coordsX = event.clientX - (sideMenuWidth), // 50 is the width of the menu
+      var coordsX = event.clientX, // 50 is the width of the menu
           coordsY = event.clientY - 50, // 20 is the half of markers height
-          point = L.point( coordsX, coordsY ), // createing a Point object with the given x and y coordinates
-          markerCoords = map.containerPointToLatLng( point ), // getting the geographical coordinates of the point
+          point = L.point(coordsX, coordsY), // createing a Point object with the given x and y coordinates
+          markerCoords = map.containerPointToLatLng(point), // getting the geographical coordinates of the point
 
           // Creating a custom icon
           myIcon = L.icon({
@@ -134,11 +134,11 @@ var addMarkers = function(map, markers, markersCount, markersCluster){
           console.log(point);
 
           // Creating a new marker and adding it to the map
-          markers[ markersCount ] = L.marker( [ markerCoords.lat, markerCoords.lng ], {
+          markers[markersCount] = L.marker([markerCoords.lat, markerCoords.lng], {
                                               draggable: true,
                                               icon: myIcon
                                      })
-                                     .addTo( map )
+                                     .addTo(map)
                                      .bindPopup(
                                        "<div class='text-center py-1'><strong>" +
                                        markerName + "</strong></div>" +
@@ -147,33 +147,57 @@ var addMarkers = function(map, markers, markersCount, markersCluster){
                                        '<button class= "btn mx-1 btn-sm btn-danger marker-delete-button text-center">清除座標</button>'
                                      );
 
-      markers[ markersCount ].on("popupopen", function(){
+      // create marker popup function
+      markers[markersCount].on("popupopen", function(){
         var tempMarker = this;
 
         $(".marker-delete-button:visible").click(function () {
+            markersCluster.removeLayer(tempMarker);
             map.removeLayer(tempMarker);
+            map.addLayer(markersCluster);
         });
 
         $(".marker-edit-button:visible").click(function () {
-            var MarkerName = $(".markerName").val();
+            var markerNote = $(".markerName").val();
             tempMarker.setPopupContent(
               "<div class='text-center py-1'><strong>" +
               markerName + "</strong></div>" +
-              "<div class='text-center my-3 h4'>" + MarkerName + "</div>" +
+              "<div class='text-center my-3 h4'>" + markerNote + "</div>" +
               '<button class= "btn mx-1 btn-sm btn-danger text-center marker-delete-button">清除座標</button>'
             );
 
             if(tempMarker.isPopupOpen()){
               $(".marker-delete-button:visible").click(function () {
+                  markersCluster.removeLayer(tempMarker);
                   map.removeLayer(tempMarker);
+                  map.addLayer(markersCluster);
               });
             }
         });
       });
-      markersCluster.addLayer(markers[ markersCount ]);
+
+      // create marker hover function
+      var tooltipPopup;
+
+  		markers[markersCount].on('mouseover', function(e) {
+        $('.draggable-marker[name="' + markerName +'"]').closest('li').css('background-color', '#c5e0ed');
+      	tooltipPopup = L.popup({ offset: L.point(0, -20)});
+				tooltipPopup.setContent('<div class="text-center">' + markerName + '</div>');
+				tooltipPopup.setLatLng(e.target.getLatLng());
+				tooltipPopup.openOn(map);
+  		});
+
+  		markers[markersCount].on('mouseout', function(e) {
+        $('.draggable-marker[name="' + markerName +'"]').closest('li').css('background-color', '');
+  			map.closePopup(tooltipPopup);
+  		});
+      // add marker cluster on the map
+      markersCluster.addLayer(markers[markersCount]);
       map.addLayer(markersCluster);
+
       markersCount++;
     }
+
   });
 }
 
@@ -204,6 +228,7 @@ window.addEventListener('load', function() {
       removeElementsByClass("leaflet-control-attribution");
 
       addMarkers(staticMap, markers, markersCount, markersCluster);
+
 
     })
     .catch(err => console.error(err));

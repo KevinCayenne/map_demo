@@ -22,7 +22,9 @@
 }
 
 ul{
-  padding-left: 15px;
+  text-align: center;
+  padding-left: 0px;
+  padding-right: 15px;
   list-style: none;
 }
 
@@ -33,6 +35,12 @@ li{
 
 li:hover{
   background-color: #e7e7e7;
+}
+
+.marker-name{
+  text-align: center;
+  width: 70%;
+  display: inline-block;
 }
 
 #navbar {
@@ -69,4 +77,10 @@ li:hover{
 .draggable {
   touch-action: none;
   user-select: none;
+}
+
+@media screen and (max-width: 576px){
+  ul{
+    padding: 0px;
+  }
 }
