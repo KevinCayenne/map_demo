@@ -119,11 +119,15 @@ var addMarkers = function(map, markers, markersCount, markersCluster){
       var sideMenuWidth = $(window).width();
       console.log(sideMenuWidth);
       if(sideMenuWidth < 576){
-        var addX = 5;
-        var addY = -70;
+        var addX = 0;
+        var addY = -60;
+      }else if(sideMenuWidth >= 576 && $('.outer-side-col').css('left') !== '-250px'){
+        var xc = $('.outer-side-col').width();
+        var addX = -xc-17;
+        var addY = -60;
       }else{
-        var addX = 5;
-        var addY = -50;
+        var addX = 0;
+        var addY = -60;
       }
 
       var coordsX = event.clientX + addX,
@@ -135,7 +139,7 @@ var addMarkers = function(map, markers, markersCount, markersCluster){
           myIcon = L.icon({
             iconUrl: markerIcon, // the url of the img
             iconSize: [40, 40],
-            iconAnchor: [20, 40] // the coordinates of the "tip" of the icon ( in this case must be ( icon width/ 2, icon height )
+            iconAnchor: [20, 20] // the coordinates of the "tip" of the icon ( in this case must be ( icon width/ 2, icon height )
           });
 
           console.log(point);
@@ -246,6 +250,33 @@ window.addEventListener('load', function() {
   //     var mapthis = run(overlayimg);
   //     console.log(mapthis);
   //   }
+  // });
+
+  $('#sidebar-btn').click(function(){
+    if($('.outer-side-col').css('left') == '-250px'){
+      $('.outer-side-col').addClass('col-sm-2')
+                          .show()
+                          .css('left', '0px');
+      $('#sidebar-btn').css('color', '#008acf');
+      $('.static-map-col').removeClass('col-sm-10')
+                          .addClass('col-sm-8');
+    }else{
+      $('.outer-side-col').css('left', '-250px')
+                          .removeClass('col-sm-2')
+                          .hide();
+
+      $('#sidebar-btn').css('color', '#e7e7e7');
+      $('.static-map-col').removeClass('col-sm-8')
+                          .addClass('col-sm-10');
+    }
+  });
+
+  // $('#sidebar-btn').hover(function(){
+  //   $('.outer-side-col').css('left', '3px');
+  //   $('#sidebar-btn').css('color', '#008acf');
+  // }, function(){
+  //   $('.outer-side-col').css('left', '-150px');
+  //   $('#sidebar-btn').css('color', '#e7e7e7');
   // });
 
 });
