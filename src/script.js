@@ -102,7 +102,7 @@ function removeElementsByClass(className){
 }
 
 // Dragging and dropping the markers to the map
-var addMarkers = function(map, markers, markersCount, markersCluster, addX, addY){
+var addMarkers = function(map, markers, markersCount, markersCluster, addXm, addYm){
   // The position of the marker icon
   var posTop = $('.draggable-marker').css('top'),
       posLeft = $('.draggable-marker').css('left');
@@ -117,23 +117,24 @@ var addMarkers = function(map, markers, markersCount, markersCluster, addX, addY
       var markerIcon = $(this).attr('src');
 
       var sideMenuWidth = $(window).width();
+      console.log(addXm, addYm);
 
-      if(addX === 0 && addY === 0){
+      if(addXm === 0 && addYm === 0){
         if(sideMenuWidth < 576){
-          var addX = 0;
-          var addY = -60;
+          addXm = 0;
+          addYm = -60;
         }else if(sideMenuWidth >= 576 && $('.outer-side-col').css('left') !== '-250px'){
           var xc = $('.outer-side-col').width();
-          var addX = -xc-17;
-          var addY = -60;
+          addXm = -xc-17;
+          addYm = -60;
         }else{
-          var addX = 0;
-          var addY = -60;
+          addXm = 0;
+          addYm = -60;
         }
       }
 
-      var coordsX = event.clientX + addX,
-          coordsY = event.clientY + addY,
+      var coordsX = event.clientX + addXm,
+          coordsY = event.clientY + addYm,
           point = L.point(coordsX, coordsY), // createing a Point object with the given x and y coordinates
           markerCoords = map.containerPointToLatLng(point), // getting the geographical coordinates of the point
 
@@ -246,12 +247,14 @@ window.addEventListener('load', function() {
       var sideMenuWidth = $(window).width();
 
       if(sideMenuWidth < 576){
+        console.log('sdfsdf');
         $(document).on('focus', 'input', function(){
-          console.log('sdfsdf');
-          var addX = -xc-77;
+          var addX = -77;
           var addY = -60;
         });
       }
+
+      console.log(addX, addY);
 
       addMarkers(staticMap, markers, markersCount, markersCluster, addX, addY);
 
