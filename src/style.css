@@ -16,7 +16,7 @@
 
 .draggable-marker{
   cursor: pointer;
-  z-index: 1000;
+  z-index: 1300;
   width: 40px;
   height: 40px;
 }
@@ -82,5 +82,23 @@ li:hover{
 @media screen and (max-width: 576px){
   ul{
     padding: 0px;
+  }
+
+  .draggable-marker{
+    cursor: pointer;
+    z-index: 1300;
+    width: 40px;
+    height: 40px;
+  }
+
+  .side-menu{
+    box-shadow: 0px 7px 10px 2px #222;
+    overflow-y: auto;
+    height: 120px;
+    background-color: white;
+    z-index: 1000;
+    position: fixed;
+    left: 0;
+    bottom: 0;
   }
 }

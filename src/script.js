@@ -116,11 +116,18 @@ var addMarkers = function(map, markers, markersCount, markersCluster){
       var markerName = $(this).attr('name');
       var markerIcon = $(this).attr('src');
 
-      var sideMenuWidth = $('.side-menu').width();
+      var sideMenuWidth = $(window).width();
       console.log(sideMenuWidth);
+      if(sideMenuWidth < 576){
+        var addX = 5;
+        var addY = -70;
+      }else{
+        var addX = 5;
+        var addY = -50;
+      }
 
-      var coordsX = event.clientX, // 50 is the width of the menu
-          coordsY = event.clientY - 50, // 20 is the half of markers height
+      var coordsX = event.clientX + addX,
+          coordsY = event.clientY + addY,
           point = L.point(coordsX, coordsY), // createing a Point object with the given x and y coordinates
           markerCoords = map.containerPointToLatLng(point), // getting the geographical coordinates of the point
 
