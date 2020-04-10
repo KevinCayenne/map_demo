@@ -102,7 +102,7 @@ function removeElementsByClass(className){
 }
 
 // Dragging and dropping the markers to the map
-var addMarkers = function (map, markers, markersCount) {
+var addMarkers = function(map, markers, markersCount, markersCluster){
   // The position of the marker icon
   var posTop = $( '.draggable-marker' ).css( 'top' ),
       posLeft = $( '.draggable-marker' ).css( 'left' );
@@ -117,9 +117,10 @@ var addMarkers = function (map, markers, markersCount) {
       var markerIcon = $(this).attr('src');
 
       var sideMenuWidth = $('.side-menu').width();
+      console.log(sideMenuWidth);
 
-      var coordsX = event.clientX - (sideMenuWidth + 20), // 50 is the width of the menu
-          coordsY = event.clientY - 15, // 20 is the half of markers height
+      var coordsX = event.clientX - (sideMenuWidth), // 50 is the width of the menu
+          coordsY = event.clientY - 50, // 20 is the half of markers height
           point = L.point( coordsX, coordsY ), // createing a Point object with the given x and y coordinates
           markerCoords = map.containerPointToLatLng( point ), // getting the geographical coordinates of the point
 
@@ -136,18 +137,17 @@ var addMarkers = function (map, markers, markersCount) {
           markers[ markersCount ] = L.marker( [ markerCoords.lat, markerCoords.lng ], {
                                               draggable: true,
                                               icon: myIcon
-                                            })
-                                            .addTo( map )
-                                            .bindPopup(
-                                              "<div class='text-center py-1'><strong>" +
-                                              markerName + "</strong></div>" +
-                                              "<div class='form-group text-center'><input class='markerName' style='height: 35px;' type='text'/></div>" +
-                                              "<button class='btn mx-1 btn-sm btn-success marker-edit-button text-center'>編輯座標</button>" +
-                                              '<button class= "btn mx-1 btn-sm btn-danger marker-delete-button text-center">清除座標</button>'
-                                            );
+                                     })
+                                     .addTo( map )
+                                     .bindPopup(
+                                       "<div class='text-center py-1'><strong>" +
+                                       markerName + "</strong></div>" +
+                                       "<div class='form-group text-center'><input class='markerName' style='height: 35px;' type='text'/></div>" +
+                                       "<button class='btn mx-1 btn-sm btn-success marker-edit-button text-center'>編輯座標</button>" +
+                                       '<button class= "btn mx-1 btn-sm btn-danger marker-delete-button text-center">清除座標</button>'
+                                     );
 
       markers[ markersCount ].on("popupopen", function(){
-
         var tempMarker = this;
 
         $(".marker-delete-button:visible").click(function () {
@@ -168,11 +168,10 @@ var addMarkers = function (map, markers, markersCount) {
                   map.removeLayer(tempMarker);
               });
             }
-
         });
-
       });
-
+      markersCluster.addLayer(markers[ markersCount ]);
+      map.addLayer(markersCluster);
       markersCount++;
     }
   });
@@ -187,12 +186,14 @@ window.addEventListener('load', function() {
     .then(img => {
 
       var markers = [], // an array containing all the markers added to the map
-          markersCount = 0; // the number of the added markers
+          markersCount = 0, // the number of the added markers
+          markersCluster = L.markerClusterGroup();
 
       console.log(`w: ${img.width} | h: ${img.height}`);
 
       var staticMap = new L.map('static-map', {
           crs: L.CRS.Simple,
+          maxZoom: 2,
           minZoom: -1
       });
 
@@ -202,7 +203,7 @@ window.addEventListener('load', function() {
       staticMap.fitBounds(staticBounds);
       removeElementsByClass("leaflet-control-attribution");
 
-      addMarkers(staticMap, markers, markersCount);
+      addMarkers(staticMap, markers, markersCount, markersCluster);
 
     })
     .catch(err => console.error(err));

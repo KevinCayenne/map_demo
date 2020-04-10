@@ -15,14 +15,24 @@
 }
 
 .draggable-marker{
+  cursor: pointer;
   z-index: 1000;
   width: 40px;
   height: 40px;
 }
 
+ul{
+  padding-left: 15px;
+  list-style: none;
+}
+
 li{
-  margin-top: 5px;
-  margin-bottom: 5px;
+  padding: 8px;
+  border-bottom: 1px solid #e7e7e7;
+}
+
+li:hover{
+  background-color: #e7e7e7;
 }
 
 #navbar {
