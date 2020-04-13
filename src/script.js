@@ -20,20 +20,32 @@ function addMarkerOnMap(lat, lng, map, markersClusterParamAdd, markerIcon, marke
                         draggable: true,
                         icon: myIconAdd
                       })
-                .addTo(map)
-                .bindPopup(
-    "<div class='text-center py-1'><strong class='marker-title'>" +
-    markerName + "</strong></div>" +
-    "<div class='form-group text-center'><input class='markerName form-control' style='height: 35px;' type='text'/></div>" +
-    "<button class='btn mx-1 btn-sm btn-success marker-edit-button text-center'>確定</button>" +
-    '<button class= "btn mx-1 btn-sm btn-danger marker-delete-button text-center">移除</button>'
-  );
+                    .addTo(map)
+                    .bindPopup(
+        "<div class='text-center py-1'><strong class='marker-title'>" +
+        markerName + "</strong></div>" +
+        "<div class='form-group text-center'><input class='markerName form-control' style='height: 35px;' type='text'/></div>" +
+        "<button class='btn mx-1 btn-sm btn-success marker-edit-button text-center'>確定</button>" +
+        '<button class= "btn mx-1 btn-sm btn-danger marker-delete-button text-center">移除</button>'
+      );
 
-  var popup = L.popup();
+  // var popup = L.popup();
 
   mpmark.on("popupopen", function(){
 
     var tempMarker = this;
+    var windowWidth = $(window).width();
+    console.log('OK');
+
+    if(windowWidth < 576){
+      $('input').focus(function(){
+        $('#device-side-menu').hide();
+      });
+
+      $('input').blur(function(){
+        $('#device-side-menu').show();
+      });
+    }
 
     $(".marker-delete-button:visible").click(function () {
         markersClusterParamAdd.removeLayer(tempMarker);
@@ -75,6 +87,7 @@ function addMarkerOnMap(lat, lng, map, markersClusterParamAdd, markerIcon, marke
     $('.draggable-marker[name="' + markerName +'"]').closest('li').css('background-color', '');
     map.closePopup(tooltipPopup);
   });
+
   // add marker cluster on the map
   markersClusterParamAdd.addLayer(mpmark);
   map.addLayer(markersClusterParamAdd);
@@ -184,10 +197,13 @@ var addMarkers = function(map, markers, markersCount, markersCluster, addXm, add
 
   $('.draggable-marker').draggable({
     start: function(e, ui){
-      // $('.side-menu').css('overflow', 'visible');
+      $('.side-menu').css('overflow', 'visible');
+    },
+    drag: function(e, ui){
+      $('.side-menu').css('overflow', 'visible');
     },
     stop: function(e, ui){
-      // $('.side-menu').css('overflow', 'auto');
+      $('.side-menu').css('overflow', 'auto');
       // returning the icon to the menu
       $('.draggable-marker').css('top', posTop);
       $('.draggable-marker').css('left', posLeft);
@@ -195,18 +211,18 @@ var addMarkers = function(map, markers, markersCount, markersCluster, addXm, add
       var markerName = $(this).attr('name');
       var markerIcon = $(this).attr('src');
 
-      var sideMenuWidth = $(window).width();
+      var windowWidth = $(window).width();
       var outer_left = $('.outer-side-col').css('left');
 
       if(addXm === 0 && addYm === 0){
-        if(sideMenuWidth < 576){
+        if(windowWidth < 576){
           addXm = 0;
           addYm = -60;
-        }else if(sideMenuWidth >= 576 && outer_left === '0px'){
+        }else if(windowWidth >= 576 && outer_left === '0px'){
           var xc = $('.outer-side-col').width();
           addXm = -xc-15;
           addYm = -60;
-        }else if(sideMenuWidth >= 576 && outer_left !== '0px'){
+        }else if(windowWidth >= 576 && outer_left !== '0px'){
           addXm = 0;
           addYm = -60;
         }
@@ -246,13 +262,13 @@ var addMarkers = function(map, markers, markersCount, markersCluster, addXm, add
       // create marker popup function
       markers[markersCount].on("popupopen", function(){
         var tempMarker = this;
-        if(sideMenuWidth < 576){
+        if(windowWidth < 576){
           $('input').focus(function(){
-            $('.side-menu').hide();
+            $('#device-side-menu').hide();
           });
 
           $('input').blur(function(){
-            $('.side-menu').show();
+            $('#device-side-menu').show();
           });
         }
 
@@ -416,7 +432,6 @@ window.addEventListener('load', function() {
                           .addClass('col-sm-10');
     }
   });
-
 });
 
 // RWD

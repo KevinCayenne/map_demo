@@ -34,7 +34,7 @@
   height: 800px;
 }
 
-.accordion>.card{
+.accordion > .card{
   overflow: visible;
 }
 
