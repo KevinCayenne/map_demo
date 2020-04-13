@@ -166,7 +166,7 @@ var addMarkers = function(map, markers, markersCount, markersCluster, addXm, add
                                      .bindPopup(
                                        "<div class='text-center py-1'><strong>" +
                                        markerName + "</strong></div>" +
-                                       "<div class='form-group text-center'><input class='markerName' style='height: 35px;' type='text'/></div>" +
+                                       "<div class='form-group text-center'><input class='markerName form-control' style='height: 35px;' type='text'/></div>" +
                                        "<button class='btn mx-1 btn-sm btn-success marker-edit-button text-center'>編輯座標</button>" +
                                        '<button class= "btn mx-1 btn-sm btn-danger marker-delete-button text-center">清除座標</button>'
                                      );
