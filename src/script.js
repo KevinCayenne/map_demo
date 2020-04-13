@@ -108,7 +108,11 @@ var addMarkers = function(map, markers, markersCount, markersCluster, addXm, add
       posLeft = $('.draggable-marker').css('left');
 
   $('.draggable-marker').draggable({
+    start: function(e, ui){
+      $('.side-menu').css('overflow', 'visible');
+    },
     stop: function(e, ui){
+      $('.side-menu').css('overflow', 'auto');
       // returning the icon to the menu
       $('.draggable-marker').css('top', posTop);
       $('.draggable-marker').css('left', posLeft);
@@ -225,7 +229,6 @@ var addMarkers = function(map, markers, markersCount, markersCluster, addXm, add
       addXm = 0;
       addYm = 0;
     }
-
   });
 }
 

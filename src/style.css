@@ -27,10 +27,12 @@
 }
 
 .side-menu{
+  z-index: 1100;
   height: 800px;
 }
 
 #static-map{
+  z-index: 1000;
   height: 800px;
 }
 
@@ -146,8 +148,12 @@ li:hover{
     position: fixed
   }
 
-  navbar{
-    position: fixed;
+  .navbar{
+    /* position: fixed; */
+  }
+
+  .side-menu{
+    z-index: 1100;
   }
 
   .side-menu > ul{
@@ -179,13 +185,12 @@ li:hover{
 
   .side-menu{
     box-shadow: 0px 7px 10px 2px #222;
-    overflow-y: auto;
-    height: 85px;
+    overflow-x: scroll;
+    height: 83px;
     background-color: white;
     z-index: 1000;
     position: fixed;
     left: 0;
     bottom: 0;
-
   }
 }
