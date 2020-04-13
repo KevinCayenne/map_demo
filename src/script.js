@@ -118,31 +118,22 @@ var addMarkers = function(map, markers, markersCount, markersCluster, addXm, add
 
       var sideMenuWidth = $(window).width();
       var outer_left = $('.outer-side-col').css('left');
-      console.log(sideMenuWidth);
-      console.log(outer_left);
-      console.log(addXm, addYm);
 
       if(addXm === 0 && addYm === 0){
         if(sideMenuWidth < 576){
           addXm = 0;
           addYm = -60;
-          console.log('1');
         }else if(sideMenuWidth >= 576 && outer_left === '0px'){
           var xc = $('.outer-side-col').width();
-          console.log(xc);
           addXm = -xc-15;
           addYm = -60;
-          console.log('2');
         }else if(sideMenuWidth >= 576 && outer_left !== '0px'){
           addXm = 0;
           addYm = -60;
-          console.log('3');
         }
       }else{
 
       }
-      console.log(addXm, addYm);
-
       var coordsX = event.clientX + addXm,
           coordsY = event.clientY + addYm,
           point = L.point(coordsX, coordsY), // createing a Point object with the given x and y coordinates
@@ -174,6 +165,14 @@ var addMarkers = function(map, markers, markersCount, markersCluster, addXm, add
       // create marker popup function
       markers[markersCount].on("popupopen", function(){
         var tempMarker = this;
+
+        $('input').focus(function(){
+          $('.side-menu').hide();
+        });
+
+        $('input').blur(function(){
+          $('.side-menu').show();
+        });
 
         $(".marker-delete-button:visible").click(function () {
             markersCluster.removeLayer(tempMarker);
@@ -259,14 +258,11 @@ window.addEventListener('load', function() {
       var sideMenuWidth = $(window).width();
 
       if(sideMenuWidth < 576){
-        console.log('sdfsdf');
         $(document).on('focus', 'input', function(){
           var addX = -77;
           var addY = -60;
         });
       }
-
-      console.log(addX, addY);
 
       addMarkers(staticMap, markers, markersCount, markersCluster, addX, addY);
 
@@ -277,7 +273,6 @@ window.addEventListener('load', function() {
   //   if (this.files && this.files[0]) {
   //     var overlayimg = URL.createObjectURL(this.files[0]);
   //     var mapthis = run(overlayimg);
-  //     console.log(mapthis);
   //   }
   // });
 
