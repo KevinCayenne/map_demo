@@ -134,6 +134,7 @@ var addMarkers = function(map, markers, markersCount, markersCluster, addXm, add
       }else{
 
       }
+
       var coordsX = event.clientX + addXm,
           coordsY = event.clientY + addYm,
           point = L.point(coordsX, coordsY), // createing a Point object with the given x and y coordinates
@@ -166,13 +167,15 @@ var addMarkers = function(map, markers, markersCount, markersCluster, addXm, add
       markers[markersCount].on("popupopen", function(){
         var tempMarker = this;
 
-        $('input').focus(function(){
-          $('.side-menu').hide();
-        });
+        if(sideMenuWidth < 576){
+          $('input').focus(function(){
+            $('.side-menu').hide();
+          });
 
-        $('input').blur(function(){
-          $('.side-menu').show();
-        });
+          $('input').blur(function(){
+            $('.side-menu').show();
+          });
+        }
 
         $(".marker-delete-button:visible").click(function () {
             markersCluster.removeLayer(tempMarker);
