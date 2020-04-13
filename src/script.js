@@ -41,7 +41,6 @@ function addMarkerOnMap(lat, lng, map, markersClusterParamAdd, markerIcon, marke
       $('input').focus(function(){
         $('#device-side-menu').hide();
       });
-
       $('input').blur(function(){
         $('#device-side-menu').show();
       });
@@ -399,6 +398,13 @@ window.addEventListener('load', function() {
 
   // RWD
   if(windowWidth < 576){
+    $('input').focus(function(){
+      $('#device-side-menu').hide();
+    });
+    $('input').blur(function(){
+      $('#device-side-menu').show();
+    });
+    
     $('#normal-side-menu').hide();
     $('#device-side-menu').show();
 
@@ -440,6 +446,13 @@ $(window).on('resize', function(){
   var windowsize = $window.width();
 
   if (windowsize < 576) {
+    $('input').focus(function(){
+      $('#device-side-menu').hide();
+    });
+    $('input').blur(function(){
+      $('#device-side-menu').show();
+    });
+
     $('#normal-side-menu').hide();
     $('#device-side-menu').show();
   }else{
