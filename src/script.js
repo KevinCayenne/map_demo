@@ -109,10 +109,10 @@ var addMarkers = function(map, markers, markersCount, markersCluster, addXm, add
 
   $('.draggable-marker').draggable({
     start: function(e, ui){
-      $('.side-menu').css('overflow', 'visible');
+      // $('.side-menu').css('overflow', 'visible');
     },
     stop: function(e, ui){
-      $('.side-menu').css('overflow', 'auto');
+      // $('.side-menu').css('overflow', 'auto');
       // returning the icon to the menu
       $('.draggable-marker').css('top', posTop);
       $('.draggable-marker').css('left', posLeft);
