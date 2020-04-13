@@ -24,7 +24,7 @@
 
 <body>
   <nav class="navbar navbar-light border-bottom navbar-expand-lg px-1">
-    <button id="sidebar-btn" class="btn btn-sm rounded-circle py-2" style="color: #e7e7e7;" type="button" name="button">
+    <button id="sidebar-btn" class="btn btn-sm rounded-circle py-2" style="color: #008acf;" type="button" name="button">
       <span class="material-icons">vertical_split</span>
     </button>
 
@@ -44,15 +44,13 @@
     </div>
   </nav>
 
-  <!-- <div class="container"> -->
-
   <div class="row border-right border-left mx-0" style="">
       <!-- <div class="row title-col py-2">
         <div class="text-right text-white col-sm-12">
           說明: 按住右側欄位之圖釘圖案，並拖曳到圖片上想放置的位置放下即可完成打點。點選圖釘可以編輯內容說明。
         </div>
       </div> -->
-      <div class="outer-side-col px-2 shadow" style="left: -250px; display: none;">
+      <div class="outer-side-col px-2 shadow col-sm-2" style="left: 0px;">
         <ul class="pr-0">
           <li>
             <div class="side-item">儀表板</div>
@@ -68,40 +66,112 @@
           </li>
         </ul>
       </div>
-      <div class="static-map-col col-sm-10 px-0">
+      <div class="static-map-col col-sm-8 px-0">
         <div id="static-map" class="bg-light">
         </div>
       </div>
-      <div class="side-menu col-sm-2 px-0 border-left">
+      <div id="normal-side-menu" class="side-menu col-sm-2 px-0 border-left">
+        <div class="accordion" id="accordionExample">
+          <div class="card">
+            <div class="card-header" id="headingOne">
+              <h2 class="mb-0">
+                <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#construct-item" aria-expanded="true" aria-controls="construct-item">
+                  結構
+                </button>
+              </h2>
+            </div>
+            <div id="construct-item" class="collapse show" aria-labelledby="headingOne" data-parent="#accordionExample">
+              <div class="card-body">
+                <ul class="px-0">
+                  <li class="item-li">
+                    <img class="draggable-marker" src="img/icon1.png" alt="marker" name="柱子"/>
+                    <div class="marker-name">柱子</div>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+          <div class="card">
+            <div class="card-header" id="headingTwo">
+              <h2 class="mb-0">
+                <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#furniture-item" aria-expanded="false" aria-controls="furniture-item">
+                  設備
+                </button>
+              </h2>
+            </div>
+            <div id="furniture-item" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionExample">
+              <div class="card-body">
+                <ul class="px-0">
+                  <li class="item-li">
+                    <img class="draggable-marker" src="img/icon2.png" alt="marker" name="電視"/>
+                    <div class="marker-name">電視</div>
+                  </li>
+                  <li class="item-li">
+                    <img class="draggable-marker" src="img/icon3.png" alt="marker" name="洗衣機"/>
+                    <div class="marker-name">洗機機</div>
+                  </li>
+                  <li class="item-li">
+                    <img class="draggable-marker" src="img/icon4.png" alt="marker" name="冰箱"/>
+                    <div class="marker-name">冰箱</div>
+                  </li>
+                  <li class="item-li">
+                    <img class="draggable-marker" src="img/icon5.png" alt="marker" name="空調"/>
+                    <div class="marker-name">空調</div>
+                  </li>
+                <ul>
+              </div>
+            </div>
+          </div>
+          <div class="card">
+            <div class="card-header" id="headingThree">
+              <h2 class="mb-0">
+                <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#electric-item" aria-expanded="false" aria-controls="electric-item">
+                  水電
+                </button>
+              </h2>
+            </div>
+            <div id="electric-item" class="collapse" aria-labelledby="headingThree" data-parent="#accordionExample">
+              <div class="card-body">
+                <ul class="px-0">
+                  <li class="item-li">
+                    <img class="draggable-marker" src="img/icon6.png" alt="marker" name="插座"/>
+                    <div class="marker-name">插座</div>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div id="device-side-menu" class="side-menu col-sm-2 px-0 border-left" style="display: none;">
         <ul class="px-0">
-          <li>
+          <li class="item-li">
             <img class="draggable-marker" src="img/icon1.png" alt="marker" name="柱子"/>
             <div class="marker-name">柱子</div>
           </li>
-          <li>
+          <li class="item-li">
             <img class="draggable-marker" src="img/icon2.png" alt="marker" name="電視"/>
             <div class="marker-name">電視</div>
           </li>
-          <li>
-            <img class="draggable-marker" src="img/icon2.png" alt="marker" name="電視"/>
-            <div class="marker-name">電視</div>
+          <li class="item-li">
+            <img class="draggable-marker" src="img/icon3.png" alt="marker" name="洗衣機"/>
+            <div class="marker-name">洗機機</div>
           </li>
-          <li>
-            <img class="draggable-marker" src="img/icon2.png" alt="marker" name="電視"/>
-            <div class="marker-name">電視電視電視電視電視電視</div>
+          <li class="item-li">
+            <img class="draggable-marker" src="img/icon4.png" alt="marker" name="冰箱"/>
+            <div class="marker-name">冰箱</div>
           </li>
-          <li>
-            <img class="draggable-marker" src="img/icon2.png" alt="marker" name="電視"/>
-            <div class="marker-name">電視電視電視電視電視電視</div>
+          <li class="item-li">
+            <img class="draggable-marker" src="img/icon5.png" alt="marker" name="空調"/>
+            <div class="marker-name">空調</div>
           </li>
-          <li>
-            <img class="draggable-marker" src="img/icon2.png" alt="marker" name="電視"/>
-            <div class="marker-name">電視電視電視電視電視電視</div>
+          <li class="item-li">
+            <img class="draggable-marker" src="img/icon6.png" alt="marker" name="插座"/>
+            <div class="marker-name">插座</div>
           </li>
         </ul>
       </div>
   </div>
-  <!-- </div> -->
 
   <footer class="footer text-center bg-white px-3 py-3 border-top">
    © 2020 GENCHI ARCHITECTURE & CONSTRUCTION CO.LTD 晉基建設

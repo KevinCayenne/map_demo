@@ -8,46 +8,121 @@ function loadImg(url) {
   });
 }
 
-function addMarkerOnMap(lat, lng, map){
+function addMarkerOnMap(lat, lng, map, markersClusterParamAdd, markerIcon, markerName){
 
-  var mp = new L.Marker([lat, lng]).addTo(map).bindPopup(
-    "<div class='text-center py-1'><strong>座標: " +
-    lat + ', ' + lng + "</strong></div>" +
-    "<div class='form-group text-center'><input class='markerName' style='height: 35px;' type='text'/></div>" +
-    "<button class='btn mx-1 btn-sm btn-success marker-edit-button text-center'>編輯座標</button>" +
-    '<button class= "btn mx-1 btn-sm btn-danger marker-delete-button text-center">清除座標</button>'
+  var myIconAdd = L.icon({
+    iconUrl: markerIcon, // the url of the img
+    iconSize: [40, 40],
+    iconAnchor: [20, 20] // the coordinates of the "tip" of the icon ( in this case must be ( icon width/ 2, icon height )
+  });
+
+  var mpmark = new L.Marker([lat, lng],{
+                        draggable: true,
+                        icon: myIconAdd
+                      })
+                .addTo(map)
+                .bindPopup(
+    "<div class='text-center py-1'><strong class='marker-title'>" +
+    markerName + "</strong></div>" +
+    "<div class='form-group text-center'><input class='markerName form-control' style='height: 35px;' type='text'/></div>" +
+    "<button class='btn mx-1 btn-sm btn-success marker-edit-button text-center'>確定</button>" +
+    '<button class= "btn mx-1 btn-sm btn-danger marker-delete-button text-center">移除</button>'
   );
 
   var popup = L.popup();
 
-  console.log(map);
-
-  mp.on("popupopen", function(){
+  mpmark.on("popupopen", function(){
 
     var tempMarker = this;
 
     $(".marker-delete-button:visible").click(function () {
+        markersClusterParamAdd.removeLayer(tempMarker);
         map.removeLayer(tempMarker);
+        map.addLayer(markersClusterParamAdd);
     });
 
     $(".marker-edit-button:visible").click(function () {
-        var MarkerName = $(".markerName").val();
-        tempMarker.setPopupContent(
-          "<div class='text-center py-1'><strong>座標: " +
-          lng + ', ' + lat + "</strong></div>" +
-          "<div class='text-center my-3 h4'>" + MarkerName + "</div>" +
-          '<button class= "btn mx-1 btn-sm btn-danger text-center marker-delete-button">清除座標</button>'
-        );
+      var markerNote = $(".markerName").val();
+      tempMarker.setPopupContent(
+        "<div class='text-center py-1'><strong class='marker-title'>" +
+        markerName + "</strong></div>" +
+        "<div class='text-center my-3 h4'>" + markerNote + "</div>" +
+        '<button class= "btn mx-1 btn-sm btn-danger text-center marker-delete-button">移除</button>'
+      );
 
-        if(tempMarker.isPopupOpen()){
-          $(".marker-delete-button:visible").click(function () {
-              map.removeLayer(tempMarker);
-          });
-        }
-
+      if(tempMarker.isPopupOpen()){
+        $(".marker-delete-button:visible").click(function () {
+            markersClusterParamAdd.removeLayer(tempMarker);
+            map.removeLayer(tempMarker);
+            map.addLayer(markersClusterParamAdd);
+        });
+      }
     });
-
   });
+
+  // create marker hover function
+  var tooltipPopup;
+
+  mpmark.on('mouseover', function(e) {
+    $('.draggable-marker[name="' + markerName +'"]').closest('li').css('background-color', '#c5e0ed');
+    tooltipPopup = L.popup({ offset: L.point(0, -20)});
+    tooltipPopup.setContent('<div class="text-center">' + markerName + '</div>');
+    tooltipPopup.setLatLng(e.target.getLatLng());
+    tooltipPopup.openOn(map);
+  });
+
+  mpmark.on('mouseout', function(e) {
+    $('.draggable-marker[name="' + markerName +'"]').closest('li').css('background-color', '');
+    map.closePopup(tooltipPopup);
+  });
+  // add marker cluster on the map
+  markersClusterParamAdd.addLayer(mpmark);
+  map.addLayer(markersClusterParamAdd);
+
+}
+
+function preloadMarkers(map, markersClusterParam){
+  var markerJson = [
+    {
+      lat: 216,
+      lng: 745,
+      icon: 'img/icon3.png',
+      markername: '洗衣機'
+    },
+    {
+      lat: 46,
+      lng: 590,
+      icon: 'img/icon2.png',
+      markername: '電視'
+    },
+    {
+      lat: 378,
+      lng: 430,
+      icon: 'img/icon4.png',
+      markername: '冰箱'
+    },
+    {
+      lat: 467,
+      lng: 775,
+      icon: 'img/icon5.png',
+      markername: '空調'
+    },
+    {
+      lat: 42,
+      lng: 218,
+      icon: 'img/icon6.png',
+      markername: '插座'
+    },
+    {
+      lat: 42,
+      lng: 707,
+      icon: 'img/icon6.png',
+      markername: '插座'
+    }
+  ];
+  for(var i=0; i<markerJson.length; i++){
+    addMarkerOnMap(markerJson[i].lat, markerJson[i].lng, map, markersClusterParam, markerJson[i].icon, markerJson[i].markername);
+  }
 }
 
 async function run(overlayimg) {
@@ -72,7 +147,7 @@ async function run(overlayimg) {
 
   function onMapClick(e) {
     var latlng = map.mouseEventToLatLng(e.originalEvent);
-    console.log(map);
+    // console.log(map);
 
     popup
   		.setLatLng(e.latlng)
@@ -102,7 +177,7 @@ function removeElementsByClass(className){
 }
 
 // Dragging and dropping the markers to the map
-var addMarkers = function(map, markers, markersCount, markersCluster, addXm, addYm){
+var addMarkers = function(map, markers, markersCount, markersCluster, addXm, addYm, scrollValm){
   // The position of the marker icon
   var posTop = $('.draggable-marker').css('top'),
       posLeft = $('.draggable-marker').css('left');
@@ -138,9 +213,10 @@ var addMarkers = function(map, markers, markersCount, markersCluster, addXm, add
       }else{
 
       }
+      // console.log(scrollValm);
 
       var coordsX = event.clientX + addXm,
-          coordsY = event.clientY + addYm,
+          coordsY = event.clientY + addYm + scrollValm,
           point = L.point(coordsX, coordsY), // createing a Point object with the given x and y coordinates
           markerCoords = map.containerPointToLatLng(point), // getting the geographical coordinates of the point
 
@@ -151,7 +227,7 @@ var addMarkers = function(map, markers, markersCount, markersCluster, addXm, add
             iconAnchor: [20, 20] // the coordinates of the "tip" of the icon ( in this case must be ( icon width/ 2, icon height )
           });
 
-          console.log(point);
+          var latlng = map.mouseEventToLatLng(e.originalEvent);
 
           // Creating a new marker and adding it to the map
           markers[markersCount] = L.marker([markerCoords.lat, markerCoords.lng], {
@@ -160,17 +236,16 @@ var addMarkers = function(map, markers, markersCount, markersCluster, addXm, add
                                      })
                                      .addTo(map)
                                      .bindPopup(
-                                       "<div class='text-center py-1'><strong>" +
+                                       "<div class='text-center py-1'><strong class='marker-title'>" +
                                        markerName + "</strong></div>" +
                                        "<div class='form-group text-center'><input class='markerName form-control' style='height: 35px;' type='text'/></div>" +
-                                       "<button class='btn mx-1 btn-sm btn-success marker-edit-button text-center'>編輯座標</button>" +
-                                       '<button class= "btn mx-1 btn-sm btn-danger marker-delete-button text-center">清除座標</button>'
+                                       "<button class='btn mx-1 btn-sm btn-success marker-edit-button text-center'>確定</button>" +
+                                       '<button class= "btn mx-1 btn-sm btn-danger marker-delete-button text-center">移除</button>'
                                      );
 
       // create marker popup function
       markers[markersCount].on("popupopen", function(){
         var tempMarker = this;
-
         if(sideMenuWidth < 576){
           $('input').focus(function(){
             $('.side-menu').hide();
@@ -190,10 +265,10 @@ var addMarkers = function(map, markers, markersCount, markersCluster, addXm, add
         $(".marker-edit-button:visible").click(function () {
             var markerNote = $(".markerName").val();
             tempMarker.setPopupContent(
-              "<div class='text-center py-1'><strong>" +
+              "<div class='text-center py-1'><strong class='marker-title'>" +
               markerName + "</strong></div>" +
               "<div class='text-center my-3 h4'>" + markerNote + "</div>" +
-              '<button class= "btn mx-1 btn-sm btn-danger text-center marker-delete-button">清除座標</button>'
+              '<button class= "btn mx-1 btn-sm btn-danger text-center marker-delete-button">移除</button>'
             );
 
             if(tempMarker.isPopupOpen()){
@@ -235,7 +310,8 @@ var addMarkers = function(map, markers, markersCount, markersCluster, addXm, add
 // image onload and upload function
 window.addEventListener('load', function() {
 
-  imgUrl = './img/demo.jpg';
+  var imgUrl = './img/demo.jpg';
+  var windowWidth = $(window).width();
 
   loadImg(imgUrl)
     .then(img => {
@@ -244,7 +320,7 @@ window.addEventListener('load', function() {
           markersCount = 0, // the number of the added markers
           markersCluster = L.markerClusterGroup();
 
-      console.log(`w: ${img.width} | h: ${img.height}`);
+      // console.log(`w: ${img.width} | h: ${img.height}`);
 
       var staticMap = new L.map('static-map', {
           crs: L.CRS.Simple,
@@ -258,19 +334,28 @@ window.addEventListener('load', function() {
       staticMap.fitBounds(staticBounds);
       removeElementsByClass("leaflet-control-attribution");
 
+      // preload markers
+      preloadMarkers(staticMap, markersCluster);
+
+      // width adjustment
       var addX = 0;
       var addY = 0;
 
-      var sideMenuWidth = $(window).width();
-
-      if(sideMenuWidth < 576){
+      if(windowWidth < 576){
         $(document).on('focus', 'input', function(){
           var addX = -77;
           var addY = -60;
         });
       }
 
-      addMarkers(staticMap, markers, markersCount, markersCluster, addX, addY);
+      // scroll adjustment
+      var scrollVal = 0;
+      $(window).scroll(function () {
+        scrollVal = $(this).scrollTop();
+        addMarkers(staticMap, markers, markersCount, markersCluster, addX, addY, scrollVal);
+      });
+
+      addMarkers(staticMap, markers, markersCount, markersCluster, addX, addY, scrollVal);
 
     })
     .catch(err => console.error(err));
@@ -281,6 +366,37 @@ window.addEventListener('load', function() {
   //     var mapthis = run(overlayimg);
   //   }
   // });
+
+  // when items list was hovered
+  $('.item-li').hover(function(){
+    var itme_img = $(this).find('.draggable-marker').attr('src');
+    $.each($('.leaflet-marker-icon'), function(){
+      if($(this).attr('src') === itme_img){
+        $(this).css('background-color', 'yellow')
+               .css('border-radius', '50%');
+        // console.log($(this).attr('src'));
+      }
+    });
+  }, function(){
+    $('.leaflet-marker-icon').css('background-color', '');
+  });
+
+  // RWD
+  if(windowWidth < 576){
+    $('#normal-side-menu').hide();
+    $('#device-side-menu').show();
+
+    $('.outer-side-col').css('left', '-250px')
+                        .removeClass('col-sm-2')
+                        .hide();
+
+    $('#sidebar-btn').css('color', '#e7e7e7');
+    $('.static-map-col').removeClass('col-sm-8')
+                        .addClass('col-sm-10');
+  }else{
+    $('#normal-side-menu').show();
+    $('#device-side-menu').hide();
+  }
 
   $('#sidebar-btn').click(function(){
     if($('.outer-side-col').css('left') == '-250px'){
@@ -301,12 +417,18 @@ window.addEventListener('load', function() {
     }
   });
 
-  // $('#sidebar-btn').hover(function(){
-  //   $('.outer-side-col').css('left', '3px');
-  //   $('#sidebar-btn').css('color', '#008acf');
-  // }, function(){
-  //   $('.outer-side-col').css('left', '-150px');
-  //   $('#sidebar-btn').css('color', '#e7e7e7');
-  // });
+});
 
+// RWD
+$(window).on('resize', function(){
+  var $window = $(window);
+  var windowsize = $window.width();
+
+  if (windowsize < 576) {
+    $('#normal-side-menu').hide();
+    $('#device-side-menu').show();
+  }else{
+    $('#normal-side-menu').show();
+    $('#device-side-menu').hide();
+  }
 });
