@@ -71,102 +71,58 @@
         </div>
       </div>
       <div id="normal-side-menu" class="side-menu col-sm-2 px-0 border-left">
-        <div class="accordion" id="accordionExample">
-          <div class="card">
-            <div class="card-header" id="headingOne">
-              <h2 class="mb-0">
-                <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#construct-item" aria-expanded="true" aria-controls="construct-item">
-                  結構
-                </button>
-              </h2>
-            </div>
-            <div id="construct-item" class="collapse show" aria-labelledby="headingOne" data-parent="#accordionExample">
-              <div class="card-body">
-                <ul class="px-0">
-                  <li class="item-li">
-                    <img class="draggable-marker" src="img/icon1.png" alt="marker" name="柱子"/>
-                    <div class="marker-name">柱子</div>
-                  </li>
-                </ul>
-              </div>
-            </div>
+        <div class="side-menu-dropdown">
+          <div class="dropdown-toggle py-2 px-2 text-center side-menu-dropdown-btn" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            類別選單
           </div>
-          <div class="card">
-            <div class="card-header" id="headingTwo">
-              <h2 class="mb-0">
-                <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#furniture-item" aria-expanded="false" aria-controls="furniture-item">
-                  設備
-                </button>
-              </h2>
-            </div>
-            <div id="furniture-item" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionExample">
-              <div class="card-body">
-                <ul class="px-0">
-                  <li class="item-li">
-                    <img class="draggable-marker" src="img/icon2.png" alt="marker" name="電視"/>
-                    <div class="marker-name">電視</div>
-                  </li>
-                  <li class="item-li">
-                    <img class="draggable-marker" src="img/icon3.png" alt="marker" name="洗衣機"/>
-                    <div class="marker-name">洗機機</div>
-                  </li>
-                  <li class="item-li">
-                    <img class="draggable-marker" src="img/icon4.png" alt="marker" name="冰箱"/>
-                    <div class="marker-name">冰箱</div>
-                  </li>
-                  <li class="item-li">
-                    <img class="draggable-marker" src="img/icon5.png" alt="marker" name="空調"/>
-                    <div class="marker-name">空調</div>
-                  </li>
-                <ul>
-              </div>
-            </div>
-          </div>
-          <div class="card">
-            <div class="card-header" id="headingThree">
-              <h2 class="mb-0">
-                <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#electric-item" aria-expanded="false" aria-controls="electric-item">
-                  水電
-                </button>
-              </h2>
-            </div>
-            <div id="electric-item" class="collapse" aria-labelledby="headingThree" data-parent="#accordionExample">
-              <div class="card-body">
-                <ul class="px-0">
-                  <li class="item-li">
-                    <img class="draggable-marker" src="img/icon6.png" alt="marker" name="插座"/>
-                    <div class="marker-name">插座</div>
-                  </li>
-                </ul>
-              </div>
-            </div>
+          <div class="dropdown-menu shadow text-center" aria-labelledby="dropdownMenuButton">
+            <a class="dropdown-item" href="#">設備</a>
+            <a class="dropdown-item" href="#">水電</a>
           </div>
         </div>
+        <ul class="px-0">
+          <li class="item-li">
+            <img class="draggable-marker" src="img/icon2.png" alt="marker" name="電視" due_date="2020/06/30" company="Sony" detail_name="Z9G(黑)"/>
+            <div class="marker-name">電視</div>
+          </li>
+          <li class="item-li">
+            <img class="draggable-marker" src="img/icon3.png" alt="marker" name="洗衣機" due_date="2020/12/31" company="Panasonic" detail_name="NA-VX88GL(銀)"/>
+            <div class="marker-name">洗機機</div>
+          </li>
+          <li class="item-li">
+            <img class="draggable-marker" src="img/icon4.png" alt="marker" name="冰箱" due_date="2020/12/31" company="HITACHI" detail_name="RG500GJ(白)"/>
+            <div class="marker-name">冰箱</div>
+          </li>
+          <li class="item-li">
+            <img class="draggable-marker" src="img/icon5.png" alt="marker" name="空調" due_date="2020/06/30" company="Teco" detail_name="MA40IH-ZR2(白)"/>
+            <div class="marker-name">空調</div>
+          </li>
+          <li class="item-li">
+            <img class="draggable-marker" src="img/icon6.png" alt="marker" name="插座" due_date="2020/12/31" company="Panasonic" detail_name="WTDFP8"/>
+            <div class="marker-name">插座</div>
+          </li>
+        </ul>
       </div>
       <div id="device-side-menu" class="side-menu col-sm-2 px-0 border-left" style="display: none;">
         <ul class="px-0">
           <li class="item-li">
-            <img class="draggable-marker" src="img/icon1.png" alt="marker" name="柱子"/>
-            <div class="marker-name">柱子</div>
-          </li>
-          <li class="item-li">
-            <img class="draggable-marker" src="img/icon2.png" alt="marker" name="電視"/>
+            <img class="draggable-marker" src="img/icon2.png" alt="marker" name="電視" due_date="2020/06/30" company="Sony" detail_name="Z9G"/>
             <div class="marker-name">電視</div>
           </li>
           <li class="item-li">
-            <img class="draggable-marker" src="img/icon3.png" alt="marker" name="洗衣機"/>
+            <img class="draggable-marker" src="img/icon3.png" alt="marker" name="洗衣機" due_date="2020/12/31" company="Panasonic" detail_name="NA-VX88GL"/>
             <div class="marker-name">洗機機</div>
           </li>
           <li class="item-li">
-            <img class="draggable-marker" src="img/icon4.png" alt="marker" name="冰箱"/>
+            <img class="draggable-marker" src="img/icon4.png" alt="marker" name="冰箱" due_date="2020/12/31" company="HITACHI" detail_name="RG500GJ(白)"/>
             <div class="marker-name">冰箱</div>
           </li>
           <li class="item-li">
-            <img class="draggable-marker" src="img/icon5.png" alt="marker" name="空調"/>
+            <img class="draggable-marker" src="img/icon5.png" alt="marker" name="空調" due_date="2020/06/30" company="Teco" detail_name="MA40IH-ZR2(白)"/>
             <div class="marker-name">空調</div>
           </li>
           <li class="item-li">
-            <img class="draggable-marker" src="img/icon6.png" alt="marker" name="插座"/>
+            <img class="draggable-marker" src="img/icon6.png" alt="marker" name="插座" due_date="2020/12/31" company="Panasonic" detail_name="WTDFP8"/>
             <div class="marker-name">插座</div>
           </li>
         </ul>

@@ -8,7 +8,7 @@ function loadImg(url) {
   });
 }
 
-function addMarkerOnMap(lat, lng, map, markersClusterParamAdd, markerIcon, markerName){
+function addMarkerOnMap(lat, lng, map, markersClusterParamAdd, markerIcon, markerName, inputObj){
 
   var myIconAdd = L.icon({
     iconUrl: markerIcon, // the url of the img
@@ -24,9 +24,11 @@ function addMarkerOnMap(lat, lng, map, markersClusterParamAdd, markerIcon, marke
                     .bindPopup(
         "<div class='text-center py-1'><strong class='marker-title'>" +
         markerName + "</strong></div>" +
-        "<div class='form-group text-center'><input class='markerName form-control' style='height: 35px;' type='text'/></div>" +
-        "<button class='btn mx-1 btn-sm btn-success marker-edit-button text-center'>確定</button>" +
-        '<button class= "btn mx-1 btn-sm btn-danger marker-delete-button text-center">移除</button>'
+        "<div class='py-1 font-weight-bold'>品牌: " + inputObj.company + "</div>" +
+        "<div class='py-1'>型號: " + inputObj.detail_name + "</div>" +
+        "<div class='pt-1 pb-3'>保固期限: " + inputObj.due_date + "</div>" +
+        "<button class='btn mx-1 btn-sm btn-warning text-center'>報修</button>" +
+        '<button class= "btn mx-1 btn-sm btn-secondary text-center">詳細</button>'
       );
 
   // var popup = L.popup();
@@ -90,7 +92,6 @@ function addMarkerOnMap(lat, lng, map, markersClusterParamAdd, markerIcon, marke
   // add marker cluster on the map
   markersClusterParamAdd.addLayer(mpmark);
   map.addLayer(markersClusterParamAdd);
-
 }
 
 function preloadMarkers(map, markersClusterParam){
@@ -99,42 +100,61 @@ function preloadMarkers(map, markersClusterParam){
       lat: 216,
       lng: 745,
       icon: 'img/icon3.png',
-      markername: '洗衣機'
+      markername: '洗衣機',
+      company: 'Panasonic',
+      detail_name: 'NA-VX88GL(銀)',
+      due_date: '2020/12/31',
     },
     {
       lat: 46,
       lng: 590,
       icon: 'img/icon2.png',
-      markername: '電視'
+      markername: '電視',
+      company: 'Sony',
+      detail_name: 'Z9G(黑)',
+      due_date: '2020/06/30',
     },
     {
       lat: 378,
       lng: 430,
       icon: 'img/icon4.png',
-      markername: '冰箱'
+      markername: '冰箱',
+      company: 'HITACHI',
+      detail_name: 'RG500GJ(白)',
+      due_date: '2020/12/31',
     },
     {
       lat: 467,
       lng: 775,
       icon: 'img/icon5.png',
-      markername: '空調'
+      markername: '空調',
+      company: 'Teco',
+      detail_name: 'MA40IH-ZR2(白)',
+      due_date: '2020/06/30',
     },
     {
       lat: 42,
       lng: 218,
       icon: 'img/icon6.png',
-      markername: '插座'
+      markername: '插座',
+      company: 'Panasonic',
+      detail_name: 'WTDFP8',
+      due_date: '2020/12/31',
     },
     {
       lat: 42,
-      lng: 707,
+      lng: 660,
       icon: 'img/icon6.png',
-      markername: '插座'
+      markername: '插座',
+      company: 'Panasonic',
+      detail_name: 'WTDFP8',
+      due_date: '2020/12/31',
     }
   ];
   for(var i=0; i<markerJson.length; i++){
-    addMarkerOnMap(markerJson[i].lat, markerJson[i].lng, map, markersClusterParam, markerJson[i].icon, markerJson[i].markername);
+    addMarkerOnMap(markerJson[i].lat, markerJson[i].lng, map, markersClusterParam, markerJson[i].icon, markerJson[i].markername, markerJson[i]);
   }
+
 }
 
 async function run(overlayimg) {
@@ -208,6 +228,9 @@ var addMarkers = function(map, markers, markersCount, markersCluster, addXm, add
       $('.draggable-marker').css('left', posLeft);
 
       var markerName = $(this).attr('name');
+      var company = $(this).attr('company');
+      var detail_name = $(this).attr('detail_name');
+      var due_date = $(this).attr('due_date');
       var markerIcon = $(this).attr('src');
 
       var windowWidth = $(window).width();
@@ -253,9 +276,11 @@ var addMarkers = function(map, markers, markersCount, markersCluster, addXm, add
                                      .bindPopup(
                                        "<div class='text-center py-1'><strong class='marker-title'>" +
                                        markerName + "</strong></div>" +
-                                       "<div class='form-group text-center'><input class='markerName form-control' style='height: 35px;' type='text'/></div>" +
-                                       "<button class='btn mx-1 btn-sm btn-success marker-edit-button text-center'>確定</button>" +
-                                       '<button class= "btn mx-1 btn-sm btn-danger marker-delete-button text-center">移除</button>'
+                                       "<div class='py-1 font-weight-bold'>品牌: " + company + "</div>" +
+                                       "<div class='py-1'>型號: " + detail_name + "</div>" +
+                                       "<div class='pt-1 pb-3'>保固期限: " + due_date + "</div>" +
+                                       "<button class='btn mx-1 btn-sm btn-warning text-center'>報修</button>" +
+                                       '<button class= "btn mx-1 btn-sm btn-secondary text-center">詳細</button>'
                                      );
 
       // create marker popup function
@@ -313,13 +338,13 @@ var addMarkers = function(map, markers, markersCount, markersCluster, addXm, add
   		});
       // add marker cluster on the map
       markersCluster.addLayer(markers[markersCount]);
-      map.addLayer(markersCluster);
 
       markersCount++;
       addXm = 0;
       addYm = 0;
     }
   });
+  map.addLayer(markersCluster);
 }
 
 // image onload and upload function
@@ -404,7 +429,7 @@ window.addEventListener('load', function() {
     $('input').blur(function(){
       $('#device-side-menu').show();
     });
-    
+
     $('#normal-side-menu').hide();
     $('#device-side-menu').show();
 

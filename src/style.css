@@ -14,6 +14,27 @@
   position: fixed; */
 }
 
+.leaflet-marker-icon{
+
+}
+
+.dropdown-menu{
+  background-color: white;
+  z-index: 1800;
+}
+
+.side-menu-dropdown-btn{
+  background-color: white;
+  color: #6c757d;
+  transition-duration: 0.3s;
+  border: 1px solid #6c757d;
+}
+
+.side-menu-dropdown-btn:hover{
+  background-color: #6c757d;
+  color: white;
+}
+
 .outer-side-col{
   /* height: 100%;
   background-color: white;
