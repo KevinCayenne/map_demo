@@ -117,21 +117,31 @@ var addMarkers = function(map, markers, markersCount, markersCluster, addXm, add
       var markerIcon = $(this).attr('src');
 
       var sideMenuWidth = $(window).width();
+      var outer_left = $('.outer-side-col').css('left');
+      console.log(sideMenuWidth);
+      console.log(outer_left);
       console.log(addXm, addYm);
 
       if(addXm === 0 && addYm === 0){
         if(sideMenuWidth < 576){
           addXm = 0;
           addYm = -60;
-        }else if(sideMenuWidth >= 576 && $('.outer-side-col').css('left') !== '-250px'){
+          console.log('1');
+        }else if(sideMenuWidth >= 576 && outer_left === '0px'){
           var xc = $('.outer-side-col').width();
-          addXm = -xc-17;
+          console.log(xc);
+          addXm = -xc-15;
           addYm = -60;
-        }else{
+          console.log('2');
+        }else if(sideMenuWidth >= 576 && outer_left !== '0px'){
           addXm = 0;
           addYm = -60;
+          console.log('3');
         }
+      }else{
+
       }
+      console.log(addXm, addYm);
 
       var coordsX = event.clientX + addXm,
           coordsY = event.clientY + addYm,
@@ -210,6 +220,8 @@ var addMarkers = function(map, markers, markersCount, markersCluster, addXm, add
       map.addLayer(markersCluster);
 
       markersCount++;
+      addXm = 0;
+      addYm = 0;
     }
 
   });

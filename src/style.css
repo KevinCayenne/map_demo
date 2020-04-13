@@ -86,9 +86,12 @@ li:hover{
 }
 
 .marker-name{
+  width: 100px;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: auto;
   vertical-align: middle;
   text-align: center;
-  width: 70%;
   display: inline-block;
 }
 
@@ -137,8 +140,18 @@ li:hover{
 }
 
 @media screen and (max-width: 576px){
-  ul{
+  navbar{
+    position: fixed;
+  }
+
+  .side-menu > ul{
+    display: flex;
+    flex-direction: row;
     padding: 0px;
+  }
+
+  .side-menu > ul > li{
+    width: 130px;
   }
 
   .outer-side-col{
@@ -150,6 +163,7 @@ li:hover{
     width: 60%;
     transition-duration: 0.2s;
   }
+
   .draggable-marker{
     cursor: pointer;
     z-index: 1300;
@@ -160,11 +174,12 @@ li:hover{
   .side-menu{
     box-shadow: 0px 7px 10px 2px #222;
     overflow-y: auto;
-    height: 130px;
+    height: 85px;
     background-color: white;
     z-index: 1000;
     position: fixed;
     left: 0;
     bottom: 0;
+
   }
 }
