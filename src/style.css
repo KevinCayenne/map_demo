@@ -18,6 +18,13 @@
 
 }
 
+.map-title{
+  background-color: #0086cf;
+  font-size: 18px;
+  letter-spacing: 4px;
+  color: white;
+}
+
 .dropdown-menu{
   background-color: white;
   z-index: 1800;

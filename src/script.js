@@ -8,92 +8,6 @@ function loadImg(url) {
   });
 }
 
-function addMarkerOnMap(lat, lng, map, markersClusterParamAdd, markerIcon, markerName, inputObj){
-
-  var myIconAdd = L.icon({
-    iconUrl: markerIcon, // the url of the img
-    iconSize: [40, 40],
-    iconAnchor: [20, 20] // the coordinates of the "tip" of the icon ( in this case must be ( icon width/ 2, icon height )
-  });
-
-  var mpmark = new L.Marker([lat, lng],{
-                        draggable: true,
-                        icon: myIconAdd
-                      })
-                    .addTo(map)
-                    .bindPopup(
-        "<div class='text-center py-1'><strong class='marker-title'>" +
-        markerName + "</strong></div>" +
-        "<div class='py-1 font-weight-bold'>品牌: " + inputObj.company + "</div>" +
-        "<div class='py-1'>型號: " + inputObj.detail_name + "</div>" +
-        "<div class='pt-1 pb-3'>保固期限: " + inputObj.due_date + "</div>" +
-        "<button class='btn mx-1 btn-sm btn-warning text-center'>報修</button>" +
-        '<button class= "btn mx-1 btn-sm btn-secondary text-center">詳細</button>'
-      );
-
-  // var popup = L.popup();
-
-  mpmark.on("popupopen", function(){
-
-    var tempMarker = this;
-    var windowWidth = $(window).width();
-    console.log('OK');
-
-    if(windowWidth < 576){
-      $('input').focus(function(){
-        $('#device-side-menu').hide();
-      });
-      $('input').blur(function(){
-        $('#device-side-menu').show();
-      });
-    }
-
-    $(".marker-delete-button:visible").click(function () {
-        markersClusterParamAdd.removeLayer(tempMarker);
-        map.removeLayer(tempMarker);
-        map.addLayer(markersClusterParamAdd);
-    });
-
-    $(".marker-edit-button:visible").click(function () {
-      var markerNote = $(".markerName").val();
-      tempMarker.setPopupContent(
-        "<div class='text-center py-1'><strong class='marker-title'>" +
-        markerName + "</strong></div>" +
-        "<div class='text-center my-3 h4'>" + markerNote + "</div>" +
-        '<button class= "btn mx-1 btn-sm btn-danger text-center marker-delete-button">移除</button>'
-      );
-
-      if(tempMarker.isPopupOpen()){
-        $(".marker-delete-button:visible").click(function () {
-            markersClusterParamAdd.removeLayer(tempMarker);
-            map.removeLayer(tempMarker);
-            map.addLayer(markersClusterParamAdd);
-        });
-      }
-    });
-  });
-
-  // create marker hover function
-  var tooltipPopup;
-
-  mpmark.on('mouseover', function(e) {
-    $('.draggable-marker[name="' + markerName +'"]').closest('li').css('background-color', '#c5e0ed');
-    tooltipPopup = L.popup({ offset: L.point(0, -20)});
-    tooltipPopup.setContent('<div class="text-center">' + markerName + '</div>');
-    tooltipPopup.setLatLng(e.target.getLatLng());
-    tooltipPopup.openOn(map);
-  });
-
-  mpmark.on('mouseout', function(e) {
-    $('.draggable-marker[name="' + markerName +'"]').closest('li').css('background-color', '');
-    map.closePopup(tooltipPopup);
-  });
-
-  // add marker cluster on the map
-  markersClusterParamAdd.addLayer(mpmark);
-  map.addLayer(markersClusterParamAdd);
-}
-
 function preloadMarkers(map, markersClusterParam){
   var markerJson = [
     {
@@ -152,9 +66,91 @@ function preloadMarkers(map, markersClusterParam){
     }
   ];
   for(var i=0; i<markerJson.length; i++){
-    addMarkerOnMap(markerJson[i].lat, markerJson[i].lng, map, markersClusterParam, markerJson[i].icon, markerJson[i].markername, markerJson[i]);
-  }
 
+    var myIconAdd = L.icon({
+      iconUrl: markerJson[i].icon, // the url of the img
+      iconSize: [40, 40],
+      iconAnchor: [20, 20] // the coordinates of the "tip" of the icon ( in this case must be ( icon width/ 2, icon height )
+    });
+
+    var mpmark = new L.Marker(new L.LatLng(markerJson[i].lat, markerJson[i].lng),{
+                          draggable: true,
+                          icon: myIconAdd
+                        })
+                      .bindPopup(
+          "<div class='text-center py-1'><strong class='marker-title'>" +
+          markerJson[i].markername + "</strong></div>" +
+          "<div class='py-1 font-weight-bold'>品牌: " + markerJson[i].company + "</div>" +
+          "<div class='py-1'>型號: " + markerJson[i].detail_name + "</div>" +
+          "<div class='pt-1 pb-3'>保固期限: " + markerJson[i].due_date + "</div>" +
+          "<button class='btn mx-1 btn-sm btn-warning text-center'>報修</button>" +
+          '<button class= "btn mx-1 btn-sm btn-secondary text-center">詳細</button>'
+        );
+
+    var popup = L.popup();
+
+    mpmark.on("popupopen", function(){
+
+      var tempMarker = this;
+      var windowWidth = $(window).width();
+      console.log('OK');
+
+      if(windowWidth < 576){
+        $('input').focus(function(){
+          $('#device-side-menu').hide();
+        });
+        $('input').blur(function(){
+          $('#device-side-menu').show();
+        });
+      }
+
+      $(".marker-delete-button:visible").click(function () {
+          markersClusterParam.removeLayer(tempMarker);
+          map.removeLayer(tempMarker);
+          map.addLayer(markersClusterParam);
+      });
+
+      $(".marker-edit-button:visible").click(function () {
+        var markerNote = $(".markerName").val();
+        tempMarker.setPopupContent(
+          "<div class='text-center py-1'><strong class='marker-title'>" +
+          markerName + "</strong></div>" +
+          "<div class='text-center my-3 h4'>" + markerNote + "</div>" +
+          '<button class= "btn mx-1 btn-sm btn-danger text-center marker-delete-button">移除</button>'
+        );
+
+        if(tempMarker.isPopupOpen()){
+          $(".marker-delete-button:visible").click(function () {
+              markersClusterParam.removeLayer(tempMarker);
+              map.removeLayer(tempMarker);
+              map.addLayer(markersClusterParam);
+          });
+        }
+      });
+    });
+
+    // create marker hover function
+    var tooltipPopup;
+    var mn = markerJson[i].markername;
+
+    mpmark.on('mouseover', function(e) {
+      $('.draggable-marker[name="' + mn + '"]').closest('li').css('background-color', '#c5e0ed');
+      tooltipPopup = L.popup({offset: L.point(0, -20)});
+      tooltipPopup.setContent('<div class="text-center">' + mn + '</div>');
+      tooltipPopup.setLatLng(e.target.getLatLng());
+      tooltipPopup.openOn(map);
+    });
+
+    mpmark.on('mouseout', function(e) {
+      $('.draggable-marker[name="' + mn + '"]').closest('li').css('background-color', '');
+      map.closePopup(tooltipPopup);
+    });
+
+
+    // add marker cluster on the map
+    markersClusterParam.addLayer(mpmark);
+  }
+  map.addLayer(markersClusterParam);
 }
 
 async function run(overlayimg) {
@@ -272,7 +268,6 @@ var addMarkers = function(map, markers, markersCount, markersCluster, addXm, add
                                               draggable: true,
                                               icon: myIcon
                                      })
-                                     .addTo(map)
                                      .bindPopup(
                                        "<div class='text-center py-1'><strong class='marker-title'>" +
                                        markerName + "</strong></div>" +
@@ -357,7 +352,7 @@ window.addEventListener('load', function() {
     .then(img => {
 
       var markers = [], // an array containing all the markers added to the map
-          markersCount = 0, // the number of the added markers
+          markersCount = 0; // the number of the added markers
           markersCluster = L.markerClusterGroup();
 
       // console.log(`w: ${img.width} | h: ${img.height}`);
