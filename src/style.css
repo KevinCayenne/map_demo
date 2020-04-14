@@ -75,10 +75,17 @@
 }
 
 .draggable-marker{
+  border-radius: 50%;
   cursor: pointer;
   z-index: 1300;
   width: 40px;
   height: 40px;
+  background-color: rgba(255, 255, 255, 0.7);
+}
+
+.leaflet-marker-icon{
+  border-radius: 50%;
+  background-color: rgba(255, 255, 255, 0.7);
 }
 
 .outer-side-col > ul > li{

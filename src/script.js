@@ -410,6 +410,12 @@ window.addEventListener('load', function() {
   // when items list was hovered
   $('.item-li').hover(function(){
     var itme_img = $(this).find('.draggable-marker').attr('src');
+
+    // $.each($('.marker-cluster'), function(){
+    //   console.log($(this));
+    //   $(this).click();
+    // });
+
     $.each($('.leaflet-marker-icon'), function(){
       if($(this).attr('src') === itme_img){
         $(this).css('background-color', 'yellow')
@@ -417,6 +423,7 @@ window.addEventListener('load', function() {
         // console.log($(this).attr('src'));
       }
     });
+
   }, function(){
     $('.leaflet-marker-icon').css('background-color', '');
   });
