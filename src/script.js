@@ -254,7 +254,7 @@ var addMarkers = function(map, markers, markersCount, markersCluster, addXm, add
       // console.log(scrollValm);
 
       var coordsX = event.clientX + addXm,
-          coordsY = event.clientY + addYm + scrollValm,
+          coordsY = event.clientY + addYm + scrollValm - 40,
           point = L.point(coordsX, coordsY), // createing a Point object with the given x and y coordinates
           markerCoords = map.containerPointToLatLng(point), // getting the geographical coordinates of the point
 
