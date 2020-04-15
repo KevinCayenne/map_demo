@@ -11,6 +11,7 @@ function loadImg(url) {
 // load marker api
 var markerJsons = [
   {
+    id: 1,
     lat: 216,
     lng: 745,
     icon: 'img/icon3.png',
@@ -20,6 +21,7 @@ var markerJsons = [
     due_date: '2020/12/31',
   },
   {
+    id: 2,
     lat: 46,
     lng: 590,
     icon: 'img/icon2.png',
@@ -29,6 +31,7 @@ var markerJsons = [
     due_date: '2020/06/30',
   },
   {
+    id: 3,
     lat: 378,
     lng: 430,
     icon: 'img/icon4.png',
@@ -38,6 +41,7 @@ var markerJsons = [
     due_date: '2020/12/31',
   },
   {
+    id: 4,
     lat: 467,
     lng: 775,
     icon: 'img/icon5.png',
@@ -47,6 +51,7 @@ var markerJsons = [
     due_date: '2020/06/30',
   },
   {
+    id: 5,
     lat: 42,
     lng: 218,
     icon: 'img/icon6.png',
@@ -56,6 +61,7 @@ var markerJsons = [
     due_date: '2020/12/31',
   },
   {
+    id: 6,
     lat: 42,
     lng: 660,
     icon: 'img/icon6.png',
@@ -68,9 +74,8 @@ var markerJsons = [
 
 // preload markers
 function preloadMarkers(markerJson, map, markersClusterParam, filter = ''){
-  console.log(filter);
 
-  if(filter){
+  if(filter !== ''){
     var markerFilterList = [];
     for(var i in markerJson){
       if(markerJson[i].markername === filter){
@@ -90,7 +95,8 @@ function preloadMarkers(markerJson, map, markersClusterParam, filter = ''){
 
     var mpmark = new L.Marker(new L.LatLng(markerJson[i].lat, markerJson[i].lng),{
                           draggable: true,
-                          icon: myIconAdd
+                          icon: myIconAdd,
+                          name: markerJson[i].markername
                         })
                       .bindPopup(
           "<div class='text-center py-1'><strong class='marker-title'>" +
@@ -108,7 +114,6 @@ function preloadMarkers(markerJson, map, markersClusterParam, filter = ''){
 
       var tempMarker = this;
       var windowWidth = $(window).width();
-      console.log('OK');
 
       if(windowWidth < 576){
         $('input').focus(function(){
@@ -146,26 +151,24 @@ function preloadMarkers(markerJson, map, markersClusterParam, filter = ''){
 
     // create marker hover function
     var tooltipPopup;
-    var mn = markerJson[i].markername;
-
-    mpmark.on('mouseover', function(e) {
-      $('.draggable-marker[name="' + mn + '"]').closest('li').css('background-color', '#c5e0ed');
+    mpmark.on('mouseover', function(e){
+      $('.draggable-marker[name="' + this.options.name + '"]').closest('li').css('background-color', '#c5e0ed');
       tooltipPopup = L.popup({offset: L.point(0, -20)});
-      tooltipPopup.setContent('<div class="text-center">' + mn + '</div>');
+      tooltipPopup.setContent('<div class="text-center">' + this.options.name + '</div>');
       tooltipPopup.setLatLng(e.target.getLatLng());
       tooltipPopup.openOn(map);
     });
 
-    mpmark.on('mouseout', function(e) {
-      $('.draggable-marker[name="' + mn + '"]').closest('li').css('background-color', '');
+    mpmark.on('mouseout', function(e){
+      $('.draggable-marker[name="' + this.options.name + '"]').closest('li').css('background-color', '');
       map.closePopup(tooltipPopup);
     });
 
     // add marker cluster on the map
     markersClusterParam.addLayer(mpmark);
   }
-  map.addLayer(markersClusterParam);
 
+  map.addLayer(markersClusterParam);
 }
 
 function markerFilter(map, markersClusterParam, thisObj){
@@ -206,7 +209,7 @@ function markerFilter(map, markersClusterParam, thisObj){
         markersCount = 0; // the number of the added markers
 
     preloadMarkers(markerJsons, map, markersClusterParam);
-    
+
     // width adjustment
     var windowWidth = $(window).width();
     var addX = 0;
@@ -416,8 +419,10 @@ var addMarkers = function(map, markers, markersCount, markersCluster, addXm, add
       markersCount++;
       addXm = 0;
       addYm = 0;
+      var markerJsonsLastID = markerJsons.length;
 
       var tempJson = {
+        id: markerJsonsLastID + 1,
         lat: markerCoords.lat,
         lng: markerCoords.lng,
         icon: markerIcon,
