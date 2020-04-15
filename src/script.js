@@ -206,27 +206,7 @@ function markerFilter(map, markersClusterParam, thisObj){
         markersCount = 0; // the number of the added markers
 
     preloadMarkers(markerJsons, map, markersClusterParam);
-
-    // width adjustment
-    var windowWidth = $(window).width();
-    var addX = 0;
-    var addY = 0;
-
-    if(windowWidth < 576){
-      $(document).on('focus', 'input', function(){
-        var addX = -77;
-        var addY = -60;
-      });
-    }
-
-    // scroll adjustment
-    var scrollVal = 0;
-    $(window).scroll(function () {
-      scrollVal = $(this).scrollTop();
-      addMarkers(map, markers, markersCount, markersCluster, addX, addY, scrollVal);
-    });
-    addMarkers(map, markers, markersCount, markersCluster, addX, addY, scrollVal);
-
+    
     // width adjustment
     var windowWidth = $(window).width();
     var addX = 0;
