@@ -8,64 +8,79 @@ function loadImg(url) {
   });
 }
 
-function preloadMarkers(map, markersClusterParam){
-  var markerJson = [
-    {
-      lat: 216,
-      lng: 745,
-      icon: 'img/icon3.png',
-      markername: '洗衣機',
-      company: 'Panasonic',
-      detail_name: 'NA-VX88GL(銀)',
-      due_date: '2020/12/31',
-    },
-    {
-      lat: 46,
-      lng: 590,
-      icon: 'img/icon2.png',
-      markername: '電視',
-      company: 'Sony',
-      detail_name: 'Z9G(黑)',
-      due_date: '2020/06/30',
-    },
-    {
-      lat: 378,
-      lng: 430,
-      icon: 'img/icon4.png',
-      markername: '冰箱',
-      company: 'HITACHI',
-      detail_name: 'RG500GJ(白)',
-      due_date: '2020/12/31',
-    },
-    {
-      lat: 467,
-      lng: 775,
-      icon: 'img/icon5.png',
-      markername: '空調',
-      company: 'Teco',
-      detail_name: 'MA40IH-ZR2(白)',
-      due_date: '2020/06/30',
-    },
-    {
-      lat: 42,
-      lng: 218,
-      icon: 'img/icon6.png',
-      markername: '插座',
-      company: 'Panasonic',
-      detail_name: 'WTDFP8',
-      due_date: '2020/12/31',
-    },
-    {
-      lat: 42,
-      lng: 660,
-      icon: 'img/icon6.png',
-      markername: '插座',
-      company: 'Panasonic',
-      detail_name: 'WTDFP8',
-      due_date: '2020/12/31',
+// load marker api
+var markerJsons = [
+  {
+    lat: 216,
+    lng: 745,
+    icon: 'img/icon3.png',
+    markername: '洗衣機',
+    company: 'Panasonic',
+    detail_name: 'NA-VX88GL(銀)',
+    due_date: '2020/12/31',
+  },
+  {
+    lat: 46,
+    lng: 590,
+    icon: 'img/icon2.png',
+    markername: '電視',
+    company: 'Sony',
+    detail_name: 'Z9G(黑)',
+    due_date: '2020/06/30',
+  },
+  {
+    lat: 378,
+    lng: 430,
+    icon: 'img/icon4.png',
+    markername: '冰箱',
+    company: 'HITACHI',
+    detail_name: 'RG500GJ(白)',
+    due_date: '2020/12/31',
+  },
+  {
+    lat: 467,
+    lng: 775,
+    icon: 'img/icon5.png',
+    markername: '空調',
+    company: 'Teco',
+    detail_name: 'MA40IH-ZR2(白)',
+    due_date: '2020/06/30',
+  },
+  {
+    lat: 42,
+    lng: 218,
+    icon: 'img/icon6.png',
+    markername: '插座',
+    company: 'Panasonic',
+    detail_name: 'WTDFP8',
+    due_date: '2020/12/31',
+  },
+  {
+    lat: 42,
+    lng: 660,
+    icon: 'img/icon6.png',
+    markername: '插座',
+    company: 'Panasonic',
+    detail_name: 'WTDFP8',
+    due_date: '2020/12/31',
+  }
+];
+
+// preload markers
+function preloadMarkers(markerJson, map, markersClusterParam, filter = ''){
+  console.log(filter);
+
+  if(filter){
+    var markerFilterList = [];
+    for(var i in markerJson){
+      if(markerJson[i].markername === filter){
+        markerFilterList.push(markerJson[i]);
+      }
     }
-  ];
-  for(var i=0; i<markerJson.length; i++){
+    markerJson = markerFilterList;
+  }
+
+  for(var i in markerJson){
 
     var myIconAdd = L.icon({
       iconUrl: markerJson[i].icon, // the url of the img
@@ -146,11 +161,95 @@ function preloadMarkers(map, markersClusterParam){
       map.closePopup(tooltipPopup);
     });
 
-
     // add marker cluster on the map
     markersClusterParam.addLayer(mpmark);
   }
   map.addLayer(markersClusterParam);
+
+}
+
+function markerFilter(map, markersClusterParam, thisObj){
+  if(thisObj.attr('filter') === 'off'){
+    var item_name = thisObj.text();
+
+    var markers = [], // an array containing all the markers added to the map
+        markersCount = 0; // the number of the added markers
+
+    preloadMarkers(markerJsons, map, markersClusterParam, item_name);
+
+    // width adjustment
+    var windowWidth = $(window).width();
+    var addX = 0;
+    var addY = 0;
+
+    if(windowWidth < 576){
+      $(document).on('focus', 'input', function(){
+        var addX = -77;
+        var addY = -60;
+      });
+    }
+
+    // scroll adjustment
+    var scrollVal = 0;
+    $(window).scroll(function () {
+      scrollVal = $(this).scrollTop();
+      addMarkers(map, markers, markersCount, markersCluster, addX, addY, scrollVal);
+    });
+    addMarkers(map, markers, markersCount, markersCluster, addX, addY, scrollVal);
+
+    $('.marker-filter').attr('filter', 'off')
+                       .css('background-color', '#f8f9fa');
+    thisObj.attr('filter', 'on')
+           .css('background-color', 'yellow');
+  }else{
+    var markers = [], // an array containing all the markers added to the map
+        markersCount = 0; // the number of the added markers
+
+    preloadMarkers(markerJsons, map, markersClusterParam);
+
+    // width adjustment
+    var windowWidth = $(window).width();
+    var addX = 0;
+    var addY = 0;
+
+    if(windowWidth < 576){
+      $(document).on('focus', 'input', function(){
+        var addX = -77;
+        var addY = -60;
+      });
+    }
+
+    // scroll adjustment
+    var scrollVal = 0;
+    $(window).scroll(function () {
+      scrollVal = $(this).scrollTop();
+      addMarkers(map, markers, markersCount, markersCluster, addX, addY, scrollVal);
+    });
+    addMarkers(map, markers, markersCount, markersCluster, addX, addY, scrollVal);
+
+    // width adjustment
+    var windowWidth = $(window).width();
+    var addX = 0;
+    var addY = 0;
+
+    if(windowWidth < 576){
+      $(document).on('focus', 'input', function(){
+        var addX = -77;
+        var addY = -60;
+      });
+    }
+
+    // scroll adjustment
+    var scrollVal = 0;
+    $(window).scroll(function () {
+      scrollVal = $(this).scrollTop();
+      addMarkers(map, markers, markersCount, markersCluster, addX, addY, scrollVal);
+    });
+    addMarkers(map, markers, markersCount, markersCluster, addX, addY, scrollVal);
+
+    thisObj.attr('filter', 'off')
+           .css('background-color', '#f8f9fa');
+  }
 }
 
 async function run(overlayimg) {
@@ -337,6 +436,18 @@ var addMarkers = function(map, markers, markersCount, markersCluster, addXm, add
       markersCount++;
       addXm = 0;
       addYm = 0;
+
+      var tempJson = {
+        lat: markerCoords.lat,
+        lng: markerCoords.lng,
+        icon: markerIcon,
+        markername: markerName,
+        company: company,
+        detail_name: detail_name,
+        due_date: due_date,
+      };
+
+      markerJsons.push(tempJson);
     }
   });
   map.addLayer(markersCluster);
@@ -350,10 +461,6 @@ window.addEventListener('load', function() {
 
   loadImg(imgUrl)
     .then(img => {
-
-      var markers = [], // an array containing all the markers added to the map
-          markersCount = 0; // the number of the added markers
-          markersCluster = L.markerClusterGroup();
 
       // console.log(`w: ${img.width} | h: ${img.height}`);
 
@@ -369,10 +476,15 @@ window.addEventListener('load', function() {
       staticMap.fitBounds(staticBounds);
       removeElementsByClass("leaflet-control-attribution");
 
+      var markers = [], // an array containing all the markers added to the map
+          markersCount = 0; // the number of the added markers
+          markersCluster = L.markerClusterGroup();
+
       // preload markers
-      preloadMarkers(staticMap, markersCluster);
+      preloadMarkers(markerJsons, staticMap, markersCluster);
 
       // width adjustment
+      var windowWidth = $(window).width();
       var addX = 0;
       var addY = 0;
 
@@ -389,8 +501,14 @@ window.addEventListener('load', function() {
         scrollVal = $(this).scrollTop();
         addMarkers(staticMap, markers, markersCount, markersCluster, addX, addY, scrollVal);
       });
-
       addMarkers(staticMap, markers, markersCount, markersCluster, addX, addY, scrollVal);
+
+      // btn function
+      $('.marker-filter').on('click', function(){
+        staticMap.removeLayer(markersCluster);
+        markersCluster = L.markerClusterGroup();
+        markerFilter(staticMap, markersCluster, $(this));
+      });
 
     })
     .catch(err => console.error(err));

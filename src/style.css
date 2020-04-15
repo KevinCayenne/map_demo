@@ -141,6 +141,7 @@ li:hover{
 }
 
 .marker-name{
+  cursor: pointer;
   width: 100px;
   white-space: nowrap;
   text-overflow: ellipsis;
