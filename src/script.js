@@ -90,23 +90,29 @@ function preloadMarkers(markerJson, map, markersClusterParam, filter = ''){
     var myIconAdd = L.icon({
       iconUrl: markerJson[i].icon, // the url of the img
       iconSize: [40, 40],
-      iconAnchor: [20, 20] // the coordinates of the "tip" of the icon ( in this case must be ( icon width/ 2, icon height )
+      iconAnchor: [20, 20], // the coordinates of the "tip" of the icon ( in this case must be ( icon width/ 2, icon height )
+      name: markerJson[i].markername,
+      id: markerJson[i].id,
+      company: markerJson[i].company,
+      detail_name: markerJson[i].detail_name,
+      due_date: markerJson[i].due_date,
     });
 
     var mpmark = new L.Marker(new L.LatLng(markerJson[i].lat, markerJson[i].lng),{
                           draggable: true,
                           icon: myIconAdd,
-                          name: markerJson[i].markername
+                          name: markerJson[i].markername,
+                          id: markerJson[i].id
                         })
                       .bindPopup(
-          "<div class='text-center py-1'><strong class='marker-title'>" +
-          markerJson[i].markername + "</strong></div>" +
-          "<div class='py-1 font-weight-bold'>品牌: " + markerJson[i].company + "</div>" +
-          "<div class='py-1'>型號: " + markerJson[i].detail_name + "</div>" +
-          "<div class='pt-1 pb-3'>保固期限: " + markerJson[i].due_date + "</div>" +
-          "<button class='btn mx-1 btn-sm btn-warning text-center'>報修</button>" +
-          '<button class= "btn mx-1 btn-sm btn-secondary text-center">詳細</button>'
-        );
+                          "<div class='text-center py-1'><strong class='marker-title'>" +
+                          markerJson[i].markername + "</strong></div>" +
+                          "<div class='py-1 font-weight-bold'>品牌: " + markerJson[i].company + "</div>" +
+                          "<div class='py-1'>型號: " + markerJson[i].detail_name + "</div>" +
+                          "<div class='pt-1 pb-3'>保固期限: " + markerJson[i].due_date + "</div>" +
+                          "<button class='btn mx-1 btn-sm btn-warning text-center'>報修</button>" +
+                          '<button class= "btn mx-1 btn-sm btn-secondary text-center">詳細</button>'
+                      )
 
     var popup = L.popup();
 
@@ -162,6 +168,19 @@ function preloadMarkers(markerJson, map, markersClusterParam, filter = ''){
     mpmark.on('mouseout', function(e){
       $('.draggable-marker[name="' + this.options.name + '"]').closest('li').css('background-color', '');
       map.closePopup(tooltipPopup);
+    });
+
+    mpmark.on('dragend', function(event) {
+      var latlng = event.target.getLatLng();
+      var thidId = this.getIcon().options.id;
+
+      for(i in markerJsons){
+        if(markerJsons[i].id === thidId){
+          markerJsons[i].lat = latlng.lat;
+          markerJsons[i].lng = latlng.lng;
+        }
+      }
+
     });
 
     // add marker cluster on the map
@@ -340,7 +359,9 @@ var addMarkers = function(map, markers, markersCount, markersCluster, addXm, add
           myIcon = L.icon({
             iconUrl: markerIcon, // the url of the img
             iconSize: [40, 40],
-            iconAnchor: [20, 20] // the coordinates of the "tip" of the icon ( in this case must be ( icon width/ 2, icon height )
+            iconAnchor: [20, 20], // the coordinates of the "tip" of the icon ( in this case must be ( icon width/ 2, icon height )
+            name: markerName,
+            id: markerJsons.length + 1
           });
 
           var latlng = map.mouseEventToLatLng(e.originalEvent);
@@ -413,6 +434,14 @@ var addMarkers = function(map, markers, markersCount, markersCluster, addXm, add
         $('.draggable-marker[name="' + markerName +'"]').closest('li').css('background-color', '');
   			map.closePopup(tooltipPopup);
   		});
+
+      var options = markers[markersCount].options;
+
+      if(options){
+        console.log(options);
+        // img.style.something = something(something);
+      }
+
       // add marker cluster on the map
       markersCluster.addLayer(markers[markersCount]);
 
@@ -433,6 +462,7 @@ var addMarkers = function(map, markers, markersCount, markersCluster, addXm, add
       };
 
       markerJsons.push(tempJson);
+
     }
   });
   map.addLayer(markersCluster);
