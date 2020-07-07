@@ -15,15 +15,20 @@
    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
 
    <script type="text/javascript" src="https://cdn.rawgit.com/asvd/dragscroll/master/dragscroll.js"></script>
-   <script type="text/javascript" src="./src/script.js"></script>
-   <link rel="stylesheet" href="./src/style.css"/>
+
    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/1.4.1/MarkerCluster.css">
    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/1.4.1/MarkerCluster.Default.css">
    <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet.markercluster/1.4.1/leaflet.markercluster-src.js"></script>
+   <link rel="stylesheet" href="./src/scss/style.css"/>
+
 </head>
 
 <body>
+
+  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+  <script type="text/javascript" src="./src/script.js"></script>
+
   <nav class="navbar navbar-light border-bottom navbar-expand-lg px-1">
     <button id="sidebar-btn" class="btn btn-sm rounded-circle py-2" style="color: #008acf;" type="button" name="button">
       <span class="material-icons">vertical_split</span>
@@ -44,11 +49,11 @@
       </div>
     </div>
   </nav>
-  <div class="row text-center border-bottom">
+  <div class="row text-center border-bottom mx-0">
     <div class="col-sm-12 font-weight-bold map-title py-2">A棟6樓</div>
   </div>
 
-  <div class="row border-right border-left mx-0" style="">
+  <div class="row mx-0" style="">
       <!-- <div class="row title-col py-2">
         <div class="text-right text-white col-sm-12">
           說明: 按住右側欄位之圖釘圖案，並拖曳到圖片上想放置的位置放下即可完成打點。點選圖釘可以編輯內容說明。
@@ -74,63 +79,49 @@
         <div id="static-map" class="bg-light">
         </div>
       </div>
-      <div id="normal-side-menu" class="side-menu col-sm-2 px-0 border-left">
-        <div class="side-menu-dropdown">
-          <div class="dropdown-toggle py-2 px-2 text-center side-menu-dropdown-btn" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-            類別選單
+        <div id="normal-side-menu" class="side-menu col-sm-2 px-0 border-left">
+          <div class="side-menu-dropdown">
+            <div>
+              <button id="create-location-btn" class="btn btn-success location-btn" type="button">
+                <span class="material-icons align-middle">
+                  add
+                </span> 
+                <span class="align-middle">
+                  新增區域
+                </span> 
+              </button>
+              <button id="save-location-btn" class="btn btn-primary location-btn" type="button" style="display: none;">
+                <span class="material-icons align-middle">
+                  save
+                </span> 
+                <span class="align-middle">
+                  確定新增
+                </span> 
+              </button>
+            </div>
+            <div class="dropdown-toggle py-2 px-2 text-center side-menu-dropdown-btn" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              類別選單
+            </div>
+            <div class="dropdown-menu shadow text-center" aria-labelledby="dropdownMenuButton">
+              <a class="dropdown-item" href="#">設備</a>
+              <a class="dropdown-item" href="#">水電</a>
+            </div>
           </div>
-          <div class="dropdown-menu shadow text-center" aria-labelledby="dropdownMenuButton">
-            <a class="dropdown-item" href="#">設備</a>
-            <a class="dropdown-item" href="#">水電</a>
-          </div>
+          <ul class="px-0" id="side-menu-item">
+            <li class="item-li" v-for="item in subCategory">
+              <img class="draggable-marker" :src="item.icon" alt="marker" :name="item.name" :due_date="item.due_date" :company="item.company" :category="item.category" :detail_name="item.detail_name"/>
+              <div class="marker-name btn btn-light marker-filter" filter="off">{{ item.name }}</div>
+            </li>
+          </ul>
         </div>
-        <ul class="px-0">
-          <li class="item-li">
-            <img class="draggable-marker" src="img/icon2.png" alt="marker" name="電視" due_date="2020/06/30" company="Sony" detail_name="Z9G(黑)"/>
-            <div class="marker-name btn btn-light marker-filter" filter="off">電視</div>
-          </li>
-          <li class="item-li">
-            <img class="draggable-marker" src="img/icon3.png" alt="marker" name="洗衣機" due_date="2020/12/31" company="Panasonic" detail_name="NA-VX88GL(銀)"/>
-            <div class="marker-name btn btn-light marker-filter" filter="off">洗衣機</div>
-          </li>
-          <li class="item-li">
-            <img class="draggable-marker" src="img/icon4.png" alt="marker" name="冰箱" due_date="2020/12/31" company="HITACHI" detail_name="RG500GJ(白)"/>
-            <div class="marker-name btn btn-light marker-filter" filter="off">冰箱</div>
-          </li>
-          <li class="item-li">
-            <img class="draggable-marker" src="img/icon5.png" alt="marker" name="空調" due_date="2020/06/30" company="Teco" detail_name="MA40IH-ZR2(白)"/>
-            <div class="marker-name btn btn-light marker-filter" filter="off">空調</div>
-          </li>
-          <li class="item-li">
-            <img class="draggable-marker" src="img/icon6.png" alt="marker" name="插座" due_date="2020/12/31" company="Panasonic" detail_name="WTDFP8"/>
-            <div class="marker-name btn btn-light marker-filter" filter="off">插座</div>
-          </li>
-        </ul>
-      </div>
-      <div id="device-side-menu" class="side-menu col-sm-2 px-0 border-left" style="display: none;">
-        <ul class="px-0">
-          <li class="item-li">
-            <img class="draggable-marker" src="img/icon2.png" alt="marker" name="電視" due_date="2020/06/30" company="Sony" detail_name="Z9G"/>
-            <div class="marker-name btn btn-light marker-filter" filter="off">電視</div>
-          </li>
-          <li class="item-li">
-            <img class="draggable-marker" src="img/icon3.png" alt="marker" name="洗衣機" due_date="2020/12/31" company="Panasonic" detail_name="NA-VX88GL"/>
-            <div class="marker-name btn btn-light marker-filter" filter="off">洗衣機</div>
-          </li>
-          <li class="item-li">
-            <img class="draggable-marker" src="img/icon4.png" alt="marker" name="冰箱" due_date="2020/12/31" company="HITACHI" detail_name="RG500GJ(白)"/>
-            <div class="marker-name btn btn-light marker-filter" filter="off">冰箱</div>
-          </li>
-          <li class="item-li">
-            <img class="draggable-marker" src="img/icon5.png" alt="marker" name="空調" due_date="2020/06/30" company="Teco" detail_name="MA40IH-ZR2(白)"/>
-            <div class="marker-name btn btn-light marker-filter" filter="off">空調</div>
-          </li>
-          <li class="item-li">
-            <img class="draggable-marker" src="img/icon6.png" alt="marker" name="插座" due_date="2020/12/31" company="Panasonic" detail_name="WTDFP8"/>
-            <div class="marker-name btn btn-light marker-filter" filter="off">插座</div>
-          </li>
-        </ul>
-      </div>
+        <div id="device-side-menu" class="side-menu col-sm-2 px-0 border-left" style="display: none;">
+          <ul class="px-0" id="device-side-menu-item">
+            <li class="item-li" v-for="item in subCategory">
+              <img class="draggable-marker" :src="item.icon" alt="marker" :name="item.name" :due_date="item.due_date" :company="item.company" :category="item.category" :detail_name="item.detail_name"/>
+              <div class="marker-name btn btn-light marker-filter" filter="off">{{ item.name }}</div>
+            </li>
+          </ul>
+        </div>
   </div>
 
   <footer class="footer text-center bg-white px-3 py-3 border-top">

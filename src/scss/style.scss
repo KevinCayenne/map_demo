@@ -1,0 +1,261 @@
+*body {
+    margin: 0;
+  }
+  
+  .nav-item{
+    text-align: center;
+  }
+  
+  .navbar{
+    /* background-color: inherit;
+    z-index: 1600;
+    top: 0px;
+    width: 100%;
+    position: fixed; */
+  }
+  
+  .leaflet-marker-icon{
+  
+  }
+  
+  .map-title{
+    background-color: #0086cf;
+    font-size: 18px;
+    letter-spacing: 4px;
+    color: white;
+  }
+  
+  .dropdown-menu{
+    background-color: white;
+    z-index: 1800;
+  }
+  
+  .side-menu-dropdown-btn{
+    background-color: white;
+    color: #6c757d;
+    transition-duration: 0.3s;
+    border: 1px solid #6c757d;
+  }
+  
+  .side-menu-dropdown-btn:hover{
+    background-color: #6c757d;
+    color: white;
+  }
+  
+  .outer-side-col{
+    /* height: 100%;
+    background-color: white;
+    z-index: 1500;
+    position: absolute;
+    top: 59px;
+    left: 3px;
+    width: 10%; */
+    transition-duration: 0.2s;
+    z-index: 1300;
+  }
+  
+  .title-col{
+    background-color: #353e47;
+  }
+
+  .location-btn{
+      border-radius: 0px;
+      width: 100%;
+  }
+  
+  .demo-block-1{
+    height: 800px;
+  }
+  
+  .accordion > .card{
+    overflow: visible;
+  }
+  
+  .side-menu{
+    /* overflow: visible; */
+    z-index: 1100;
+    height: 800px;
+  }
+  
+  #static-map{
+    z-index: 1000;
+    height: 800px;
+  }
+  
+  #mapid {
+    height: 800px;
+  }
+  
+  .draggable-marker{
+    border-radius: 50%;
+    cursor: pointer;
+    z-index: 1300;
+    width: 40px;
+    height: 40px;
+    background-color: rgba(255, 255, 255, 0.7);
+  }
+  
+  .leaflet-marker-icon{
+    border-radius: 50%;
+    background-color: rgba(255, 255, 255, 0.7);
+  }
+  
+  .outer-side-col > ul > li{
+    margin-top: 5px;
+    margin-bottom: 5px;
+    color: #008acf;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    cursor: pointer;
+    border-bottom: none;
+    border-radius: 30px;
+  }
+  
+  .outer-side-col > ul > li:hover{
+    color: white;
+    background-color: #008acf;
+  }
+  
+  .side-item-active{
+    background-color: #008acf;
+  }
+  
+  .side-item-active > .side-item{
+    color: white;
+  }
+  
+  .card{
+    border-radius: 0px;
+  }
+  
+  ul{
+    margin-bottom: 0px;
+    text-align: center;
+    padding-left: 0px;
+    padding-right: 15px;
+    list-style: none;
+  }
+  
+  li{
+    padding: 8px;
+    border-bottom: 1px solid #e7e7e7;
+  }
+  
+  li:hover{
+    background-color: #e7e7e7;
+  }
+  
+  .marker-name{
+    cursor: pointer;
+    width: 100px;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+    vertical-align: middle;
+    text-align: center;
+    display: inline-block;
+  }
+  
+  #navbar {
+    background-color: #099;
+    top: 0;
+    width: 100%;
+    padding-top: 3px;
+    padding-bottom: 3px;
+    padding-left: 20px;
+  }
+  
+  .main {
+    height: 500px;
+    overflow: auto;
+    margin-top: 10px;
+    padding: 16px;
+    width: 98%;
+    cursor: grab;
+    cursor: -o-grab;
+    cursor: -moz-grab;
+    cursor: -webkit-grab;
+  }
+  
+  .main img {
+    height: auto;
+    width: 100%;
+  }
+  
+  .zoom-btn{
+    right: 0px;
+    position: fixed;
+  }
+  
+  .card-body{
+    margin-bottom: 0px;
+    padding: 0px;
+  }
+  
+  .draggable {
+    touch-action: none;
+    user-select: none;
+  }
+  
+  .footer{
+    z-index: 1800;
+  }
+  
+  @media screen and (max-width: 996px){
+  
+  }
+  
+  @media screen and (max-width: 576px){
+    body{
+      width:100%;
+      height:100%;
+      position: fixed
+    }
+  
+    .navbar{
+      /* position: fixed; */
+    }
+  
+    .side-menu{
+      z-index: 1100;
+    }
+  
+    .side-menu > ul{
+      display: flex;
+      flex-direction: row;
+      padding: 0px;
+    }
+  
+    .side-menu > ul > li{
+      width: 130px;
+    }
+  
+    .outer-side-col{
+      background-color: white;
+      top: 59px;
+      z-index: 1500;
+      height: 100%;
+      position: absolute;
+      width: 60%;
+      transition-duration: 0.2s;
+    }
+  
+    .draggable-marker{
+      cursor: pointer;
+      z-index: 1300;
+      width: 40px;
+      height: 40px;
+    }
+  
+    .side-menu{
+      box-shadow: 0px 7px 10px 2px #222;
+      overflow: auto;
+      height: 100px;
+      background-color: white;
+      z-index: 1000;
+      position: fixed;
+      left: 0;
+      bottom: 0;
+    }
+  }
+  
